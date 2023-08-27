@@ -1,118 +1,222 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import ThemeDropdown from "@/components/theme-dropdown";
+import { Button } from "@/components/ui/button";
+import Head from "next/head";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Spin as Hamburger } from "hamburger-react";
+import Image from "next/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ReasonCard } from "@/components/others/reason-card";
 
 export default function Home() {
+  const [isOpen, setOpen] = useState(false);
+  const [sheet, setSheet] = useState("translate-x-[75vw]");
+
+  useEffect(() => {
+    if (isOpen) {
+      setSheet("translate-x-0");
+    } else {
+      setSheet("translate-x-[75vw]");
+    }
+  }, [isOpen]);
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <div className="bg-white dark:bg-[#121212]">
+      <Head>
+        <title>Danaku</title>
+      </Head>
+      <nav className="border-b border-opacity-10 shadow-sm sticky top-0 z-40 bg-white dark:bg-[#121212]">
+        <div className="container flex py-4 justify-between">
+          <div className="w-1/3 flex justify-start items-center">
+            <Link
+              href="/"
+              className="text-lg px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-900 rounded-md">
+              Dana<span className="text-yellow-400 font-black">Ku</span>
+            </Link>
+          </div>
+          <div className="w-1/3 md:flex hidden justify-center items-center">
+            <Link href="#beranda" className="mx-2">
+              <Button variant="link">Beranda</Button>
+            </Link>
+            <Link href="#produk" className="mx-2">
+              <Button variant="link">Produk</Button>
+            </Link>
+            <Link href="#tentang" className="mx-2">
+              <Button variant="link">Tentang</Button>
+            </Link>
+          </div>
+          <div className="w-1/3 md:flex hidden justify-end items-center">
+            <Link href="/login" className="mr-2">
+              <Button variant="ghost" className="font-bold">
+                Masuk
+              </Button>
+            </Link>
+            <Link href="/register" className="ml-2">
+              <Button className="font-bold">Daftar</Button>
+            </Link>
+          </div>
+          <div className="w-1/3 md:hidden flex justify-end">
+            <Hamburger
+              toggled={isOpen}
+              toggle={setOpen}
+              direction="right"
+              size={28}
             />
-          </a>
+          </div>
+        </div>
+      </nav>
+
+      <main className="container">
+        <section
+          id="beranda"
+          className="flex flex-wrap md:my-28 my-16 scroll-my-48">
+          <div className="lg:w-1/2 w-full flex flex-col justify-center">
+            <p className="text-5xl font-semibold leading-[1.15] lg:text-left text-center">
+              Kelola Dana Koperasi Anda Degan Mudah hanya di Dana
+              <span className="text-yellow-400">Ku</span>
+            </p>
+            <p className="my-2 lg:text-left text-center opacity-80">
+              Selamat datang di Dana<span className="text-yellow-400">Ku</span>!
+              Kami adalah solusi modern yang dirancang khusus untuk memperkuat
+              koneksi dan pelayanan antara koperasi dan anggota.
+            </p>
+            <div className="flex lg:flex-row flex-col">
+              <Link href="/login" className="lg:mr-2 mx-auto lg:m-0 mt-4">
+                <Button className="font-bold">Ayo Mulai</Button>
+              </Link>
+              <Link href="#produk" className="lg:ml-2 mx-auto lg:m-0 mt-3">
+                <Button variant="ghost" className="font-bold">
+                  Bagaimana ini bekerja?
+                </Button>
+              </Link>
+            </div>
+          </div>
+          <div className="lg:w-1/2 w-full flex justify-end lg:pr-16 pr-0 lg:m-0 mt-16">
+            <TooltipProvider>
+              <Tooltip delayDuration={50}>
+                <TooltipTrigger>
+                  <Image
+                    src="/main-image.png"
+                    alt="main-image"
+                    width={400}
+                    height={400}
+                    className="object-contain"
+                    priority
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    Image by{" "}
+                    <Link
+                      href="https://storyset.com"
+                      target="_blank"
+                      className="hover:underline underline-offset-4">
+                      StorySet
+                    </Link>
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </section>
+
+        <section
+          id="produk"
+          className="flex flex-col md:my-28 my-16 scroll-my-40">
+          <div className="flex flex-col mb-16">
+            <div className="flex flex-col mb-8">
+              <p className="text-3xl font-semibold text-center mb-2">
+                Mengapa Harus Memilih Kami?
+              </p>
+              <p className="text-center opacity-80">
+                Kami bertujuan untuk membawa kemudahan dan keterjangkauan kepada
+                Anda.
+              </p>
+            </div>
+            <div className="flex flex-wrap">
+              <ReasonCard.KemudahanAkses />
+              <ReasonCard.BerkembangBersama />
+              <ReasonCard.PeminjamanInvestasi />
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex flex-col mb-8">
+              <p className="text-3xl font-semibold text-center mb-2">
+                Fitur Unggulan Kami
+              </p>
+              <p className="text-center opacity-80">
+                Akses semua fitur unggulan kami dengan mudah dan cepat.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-opacity-10">
+        <div className="container flex flex-col">
+          <div className="flex justify-between items-center my-4">
+            <div className="flex flex-col text-sm">
+              <div className="flex items-center">
+                <p>
+                  © 2023 {` `}
+                  <Link
+                    href="https://github.com/lanakuge"
+                    target="_blank"
+                    className="hover:underline underline-offset-4">
+                    Nizhar Maulana
+                  </Link>
+                </p>
+              </div>
+              <div>
+                <p>All Rights Reserved</p>
+              </div>
+            </div>
+            <div>
+              <ThemeDropdown />
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <div
+        className={`fixed top-[77px] bg-white dark:bg-[#121212] right-0 z-30 overflow-hidden h-screen border-l border-opacity-10 w-[75vw] ${sheet} duration-200`}>
+        <div className="flex flex-col my-4 font-bold">
+          <Link href="#beranda" className="mx-2 my-2">
+            <Button variant="link" onClick={() => setOpen(false)}>
+              Beranda
+            </Button>
+          </Link>
+          <Link href="#produk" className="mx-2 my-2">
+            <Button variant="link" onClick={() => setOpen(false)}>
+              Produk
+            </Button>
+          </Link>
+          <Link href="#tentang" className="mx-2 my-2">
+            <Button variant="link" onClick={() => setOpen(false)}>
+              Tentang
+            </Button>
+          </Link>
+          <Link href="/login" className="mx-2 my-2">
+            <Button
+              variant="link"
+              className="text-yellow-400 dark:text-yellow-400">
+              Masuk
+            </Button>
+          </Link>
+          <Link href="/register" className="mx-2 my-2">
+            <Button
+              variant="link"
+              className="text-yellow-400 dark:text-yellow-400">
+              Daftar
+            </Button>
+          </Link>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </div>
+  );
 }
