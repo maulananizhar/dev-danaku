@@ -68,7 +68,7 @@ const BerkembangBersama = () => {
             Dana<span className="text-yellow-400">Ku</span> adalah wadah bagi
             gagasan dan aspirasi Anda. Anda dapat berpartisipasi dalam forum
             diskusi, memberikan masukan, dan bahkan mengajukan inisiatif untuk
-            pertumbuhan bersama koperasi dan anggota lainnya.
+            pertumbuhan bersama.
           </p>
         </CardContent>
         <CardFooter>
