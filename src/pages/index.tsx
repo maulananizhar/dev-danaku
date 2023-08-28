@@ -35,7 +35,7 @@ export default function Home() {
           <div className="w-1/3 flex justify-start items-center">
             <Link
               href="/"
-              className="text-lg px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-900 rounded-md">
+              className="text-lg font-bold px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-900 rounded-md">
               Dana<span className="text-yellow-400 font-black">Ku</span>
             </Link>
           </div>
@@ -86,7 +86,7 @@ export default function Home() {
               koneksi dan pelayanan antara koperasi dan anggota.
             </p>
             <div className="flex lg:flex-row flex-col">
-              <Link href="/login" className="lg:mr-2 mx-auto lg:m-0 mt-4">
+              <Link href="/dashboard" className="lg:mr-2 mx-auto lg:m-0 mt-4">
                 <Button className="font-bold">Ayo Mulai</Button>
               </Link>
               <Link href="#produk" className="lg:ml-2 mx-auto lg:m-0 mt-3">

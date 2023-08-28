@@ -1,17 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { ToastAction } from "@/components/ui/toast";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
+import { AuthContext } from "@/services/storage";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import jwt from "jsonwebtoken";
 
 export default function Register() {
   const router = useRouter();
@@ -22,6 +24,26 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [status, setStatus] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const auth = useContext(AuthContext);
+
+  async function refreshToken() {
+    try {
+      const response = await axios.post(
+        `/api/auth/token`,
+        {},
+        { withCredentials: true }
+      );
+      auth.setToken(response.data.accessToken);
+      const decoded: any = jwt.decode(response.data.accessToken);
+      auth.setName(decoded.name);
+      auth.setEmail(decoded.email);
+      auth.setExpire(decoded.exp);
+      router.push("/dashboard");
+    } catch (error) {
+      setIsLoading(false);
+    }
+  }
 
   async function registerHandler(e: any) {
     e.preventDefault();
@@ -42,6 +64,19 @@ export default function Register() {
       setStatus(err.response.data.status);
       setErrorMessage(err.response.data.message);
     }
+  }
+
+  useEffect(() => {
+    refreshToken();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="bg-white dark:bg-[#121212]">
+        <Head>Authentication</Head>
+        <div className="w-screeen h-screen flex justify-center items-center"></div>
+      </div>
+    );
   }
 
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -5,10 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import jwt from "jsonwebtoken";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AuthContext } from "@/services/storage";
 
 export default function Login() {
   const router = useRouter();
@@ -16,6 +19,26 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const auth = useContext(AuthContext);
+
+  async function refreshToken() {
+    try {
+      const response = await axios.post(
+        `/api/auth/token`,
+        {},
+        { withCredentials: true }
+      );
+      auth.setToken(response.data.accessToken);
+      const decoded: any = jwt.decode(response.data.accessToken);
+      auth.setName(decoded.name);
+      auth.setEmail(decoded.email);
+      auth.setExpire(decoded.exp);
+      router.push("/dashboard");
+    } catch (error) {
+      setIsLoading(false);
+    }
+  }
 
   async function loginHandler(e: any) {
     e.preventDefault();
@@ -30,6 +53,19 @@ export default function Login() {
       setStatus(err.response.data.status);
       setErrorMessage(err.response.data.message);
     }
+  }
+
+  useEffect(() => {
+    refreshToken();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="bg-white dark:bg-[#121212]">
+        <Head>Authentication</Head>
+        <div className="w-screeen h-screen flex justify-center items-center"></div>
+      </div>
+    );
   }
 
   return (
