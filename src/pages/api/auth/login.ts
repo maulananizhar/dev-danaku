@@ -31,13 +31,27 @@ export default async function handler(
     if (req.method !== "POST")
       return res
         .status(405)
-        .json({ status: false, message: "Method not allowed" });
+        .json({ status: false, message: "Method tidak diizinkan" });
+
+    // email null
+    if (email == "")
+      return res.status(400).json({
+        status: false,
+        message: "Masukkan email!",
+      });
+
+    // password null
+    if (password == "")
+      return res.status(400).json({
+        status: false,
+        message: "Masukkan kata sandi!",
+      });
 
     // email validation
     if (!validator.isEmail(email))
       return res.status(400).json({
         status: false,
-        message: "Invalid email format!",
+        message: "Format email tidak valid!",
       });
 
     // email check
@@ -49,14 +63,14 @@ export default async function handler(
     if (!data)
       return res
         .status(404)
-        .json({ status: false, message: "Email not found!" });
+        .json({ status: false, message: "Email tidak ditemukan!" });
 
     // password match
     const match = await bcrypt.compare(password, data.password);
     if (!match)
       return res
         .status(400)
-        .json({ status: false, message: "Wrong password!" });
+        .json({ status: false, message: "Kata sandi salah!" });
 
     // sign jwt
     const accessToken = jwt.sign(
@@ -100,7 +114,7 @@ export default async function handler(
   } catch (error) {
     return res.status(500).json({
       status: false,
-      message: "Internal server error!",
+      message: "Kesalahan server!",
       error: `${error}`,
     });
   }

@@ -18,7 +18,35 @@ export default async function handler(
     if (req.method !== "POST")
       return res
         .status(405)
-        .json({ status: false, message: "Method not allowed" });
+        .json({ status: false, message: "Method tidak diizinkan" });
+
+    // name null
+    if (name == "")
+      return res.status(400).json({
+        status: false,
+        message: "Masukkan nama!",
+      });
+
+    // email null
+    if (email == "")
+      return res.status(400).json({
+        status: false,
+        message: "Masukkan email!",
+      });
+
+    // password null
+    if (password == "")
+      return res.status(400).json({
+        status: false,
+        message: "Masukkan kata sandi!",
+      });
+
+    // password null
+    if (confirmPassword == "")
+      return res.status(400).json({
+        status: false,
+        message: "Masukkan konfirmasi kata sandi!",
+      });
 
     // email duplicated
     const duplicated = await prisma.users.findUnique({
@@ -29,21 +57,21 @@ export default async function handler(
 
     if (duplicated)
       return res
-        .status(200)
-        .json({ status: false, message: "Email is not available" });
+        .status(400)
+        .json({ status: false, message: "Email tidak tersedia!" });
 
     // password match
     if (password !== confirmPassword)
       return res.status(400).json({
         status: false,
-        message: "Password and confirm password not match",
+        message: "Kata sandi dan Konfirmasi tidak sama!",
       });
 
     // email validation
     if (!validator.isEmail(email))
       return res.status(400).json({
         status: false,
-        message: "Invalid email format!",
+        message: "Format email tidak valid!",
       });
 
     // create user
