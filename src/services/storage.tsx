@@ -1,17 +1,21 @@
 import { createContext } from "react";
 
 export const AuthContext = createContext({
-  isAuth: false,
-  name: "",
+  uuid: "",
+  firstName: "",
+  lastName: "",
   email: "",
   token: "",
   expire: 0,
 
-  setIsAuth(isAuth: boolean) {
-    this.isAuth = isAuth;
+  setUuid(uuid: string) {
+    this.uuid = uuid;
   },
-  setName(name: string) {
-    this.name = name;
+  setFirstName(firstName: string) {
+    this.firstName = firstName;
+  },
+  setLastName(lastName: string) {
+    this.lastName = lastName;
   },
   setEmail(email: string) {
     this.email = email;
@@ -21,5 +25,13 @@ export const AuthContext = createContext({
   },
   setExpire(expire: number) {
     this.expire = expire;
+  },
+});
+
+export const MembershipContext = createContext({
+  memberData: [],
+
+  setMemberData(data: any) {
+    this.memberData = data;
   },
 });

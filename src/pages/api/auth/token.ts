@@ -54,11 +54,11 @@ export default async function handler(
             )
             .json({ status: false, message: "Invalid token" });
 
-        const { uuid, name, email } = data[0];
+        const { uuid, firstName, lastName, email } = data[0];
 
         // sign new access token
         const accessToken = jwt.sign(
-          { uuid, name, email },
+          { uuid, firstName, lastName, email },
           `${process.env.ACCESS_TOKEN_SECRET}`,
           { expiresIn: "15s" }
         );

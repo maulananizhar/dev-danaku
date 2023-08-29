@@ -7,24 +7,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-export async function getServerSideProps() {
-  const accessTokenSecret = process.env.ACCCESS_TOKEN_SECRET;
-  const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
-
-  return {
-    props: {
-      accessTokenSecret,
-      refreshTokenSecret,
-    },
-  };
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { email, password } = req.body;
-  const props = await getServerSideProps();
 
   try {
     // method check
@@ -76,7 +63,8 @@ export default async function handler(
     const accessToken = jwt.sign(
       {
         uuid: data.uuid,
-        name: data.name,
+        firstName: data.firstName,
+        lastName: data.lastName,
         email: data.email,
       },
       `${process.env.ACCESS_TOKEN_SECRET}`,
@@ -86,7 +74,8 @@ export default async function handler(
     const refreshToken = jwt.sign(
       {
         uuid: data.uuid,
-        name: data.name,
+        firstName: data.firstName,
+        lastName: data.lastName,
         email: data.email,
       },
       `${process.env.REFRESH_TOKEN_SECRET}`,

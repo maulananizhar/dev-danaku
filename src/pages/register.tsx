@@ -18,7 +18,8 @@ import jwt from "jsonwebtoken";
 export default function Register() {
   const router = useRouter();
   const { toast } = useToast();
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -36,7 +37,9 @@ export default function Register() {
       );
       auth.setToken(response.data.accessToken);
       const decoded: any = jwt.decode(response.data.accessToken);
-      auth.setName(decoded.name);
+      auth.setUuid(decoded.uuid);
+      auth.setFirstName(decoded.firstName);
+      auth.setLastName(decoded.lastName);
       auth.setEmail(decoded.email);
       auth.setExpire(decoded.exp);
       router.push("/dashboard");
@@ -50,7 +53,7 @@ export default function Register() {
     try {
       const data = await axios.post(
         `/api/auth/register`,
-        { name, email, password, confirmPassword },
+        { firstName, lastName, email, password, confirmPassword },
         { withCredentials: true }
       );
       toast({
@@ -101,17 +104,29 @@ export default function Register() {
                 <AlertDescription>{errorMessage}</AlertDescription>
               </Alert>
               <form onSubmit={registerHandler}>
-                <Label htmlFor="name">Nama Koperasi</Label>
-                <Input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={e => {
-                    setName(e.target.value);
-                  }}
-                  placeholder="Masukkan nama koperasi"
-                  className="mb-3 dark:border-white/20"
-                />
+                <Label htmlFor="name">Nama</Label>
+                <div className="flex w-full">
+                  <Input
+                    type="text"
+                    id="firstName"
+                    value={firstName}
+                    onChange={e => {
+                      setFirstName(e.target.value);
+                    }}
+                    placeholder="Nama awal"
+                    className="mb-3 dark:border-white/20 mr-2"
+                  />
+                  <Input
+                    type="text"
+                    id="lastName"
+                    value={lastName}
+                    onChange={e => {
+                      setLastName(e.target.value);
+                    }}
+                    placeholder="Nama akhir"
+                    className="mb-3 dark:border-white/20 ml-2"
+                  />
+                </div>
                 <Label htmlFor="email">Email</Label>
                 <Input
                   type="email"

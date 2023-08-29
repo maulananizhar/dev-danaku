@@ -9,7 +9,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { name, email, password, confirmPassword } = req.body;
+  const { firstName, lastName, email, password, confirmPassword } = req.body;
 
   try {
     const hash = await bcrypt.hash(password, 10);
@@ -21,10 +21,17 @@ export default async function handler(
         .json({ status: false, message: "Method tidak diizinkan" });
 
     // name null
-    if (name == "")
+    if (firstName == "")
       return res.status(400).json({
         status: false,
-        message: "Masukkan nama!",
+        message: "Masukkan nama awal!",
+      });
+
+    // name null
+    if (lastName == "")
+      return res.status(400).json({
+        status: false,
+        message: "Masukkan nama akhir!",
       });
 
     // email null
@@ -46,6 +53,13 @@ export default async function handler(
       return res.status(400).json({
         status: false,
         message: "Masukkan konfirmasi kata sandi!",
+      });
+
+    // password length
+    if (confirmPassword.length < 8)
+      return res.status(400).json({
+        status: false,
+        message: "Kata sandi minimal 8 karakter!",
       });
 
     // email duplicated
@@ -77,13 +91,14 @@ export default async function handler(
     // create user
     const data = await prisma.users.create({
       data: {
-        name,
+        firstName,
+        lastName,
         email,
         password: hash,
       },
     });
     return res
       .status(201)
-      .json({ status: true, message: "User created!", data });
+      .json({ status: true, message: "Akun telah dibuat!", data });
   } catch (err) {}
 }

@@ -31,7 +31,9 @@ export default function Login() {
       );
       auth.setToken(response.data.accessToken);
       const decoded: any = jwt.decode(response.data.accessToken);
-      auth.setName(decoded.name);
+      auth.setUuid(decoded.uuid);
+      auth.setFirstName(decoded.firstName);
+      auth.setLastName(decoded.lastName);
       auth.setEmail(decoded.email);
       auth.setExpire(decoded.exp);
       router.push("/dashboard");
