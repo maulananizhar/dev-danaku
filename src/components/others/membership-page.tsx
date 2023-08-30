@@ -13,16 +13,33 @@ import { AuthContext, MembershipContext } from "@/services/storage";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Label } from "@/components/ui/label";
+import { DotsVerticalIcon } from "@radix-ui/react-icons";
+import { PopoverForm } from "@/components/others/popover-form";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 function Member() {
   const router = useRouter();
   const member = useContext(MembershipContext);
   const auth = useContext(AuthContext);
-  const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
   const [length, setLength] = useState(0);
   const [page, setPage] = useState(1);
   const [max, setMax] = useState(1);
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState(true);
 
   function memberIdMaker(id: number) {
     if (id < 10) {
@@ -63,9 +80,30 @@ function Member() {
       setLength(response.data.length);
       setMax(Math.ceil(response.data.length / limit));
     } catch (err) {
-      console.log(err);
-
       router.push("/login");
+    }
+  }
+
+  async function addMember(e: any) {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/member/add", {
+        ownerId: auth.uuid,
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+      });
+      memberFetcher(search, auth.uuid, page, 10);
+      setIsOpen(false);
+      setForm({
+        firstName: "",
+        lastName: "",
+        email: "",
+      });
+    } catch (err: any) {
+      setStatus(err.response.data.status);
+      setErrorMessage(err.response.data.message);
+      // console.log(err);
     }
   }
 
@@ -83,8 +121,6 @@ function Member() {
   useEffect(() => {
     const delay = setTimeout(() => {
       memberFetcher(search, auth.uuid, page, 10);
-      console.log(data);
-      console.log(length);
     }, 500);
 
     return () => clearTimeout(delay);
@@ -101,10 +137,17 @@ function Member() {
     member.setMemberData(data);
   }, [data]);
 
+  useEffect(() => {
+    member.setSearch(search);
+    member.setLength(length);
+    member.setPage(page);
+    member.setMax(max);
+  }, [search, length, page, max]);
+
   return (
     <>
       <div className="flex">
-        <div className="flex">
+        <div className="xs:flex hidden">
           <form>
             <Input
               type="text"
@@ -116,7 +159,76 @@ function Member() {
             />
           </form>
         </div>
-        <div></div>
+        <div className="ml-auto">
+          <Popover open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
+            <PopoverTrigger>
+              <Button size="sm" className="font-bold">
+                Tambah anggota
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="dark:bg-[#121212] w-[350px]">
+              <form className="flex flex-col gap-3" onSubmit={addMember}>
+                <Alert
+                  variant="destructive"
+                  className={`justify-center py-2 mb-4 ${
+                    status ? "hidden" : "flex"
+                  }`}>
+                  <AlertDescription>{errorMessage}</AlertDescription>
+                </Alert>
+                <div className="flex gap-2">
+                  <Label htmlFor="firstName" className="w-1/4 my-auto">
+                    Nama awal
+                  </Label>
+                  <Input
+                    type="text"
+                    id="firstName"
+                    value={form.firstName}
+                    onChange={e =>
+                      setForm(prev => ({ ...prev, firstName: e.target.value }))
+                    }
+                    placeholder="Saul"
+                    className="mb-3 dark:border-white/20 h-8 m-0 w-3/4"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Label htmlFor="lastName" className="w-1/4 my-auto">
+                    Nama akhir
+                  </Label>
+                  <Input
+                    type="text"
+                    id="lastName"
+                    value={form.lastName}
+                    onChange={e =>
+                      setForm(prev => ({ ...prev, lastName: e.target.value }))
+                    }
+                    placeholder="Goodman"
+                    className="mb-3 dark:border-white/20 h-8 m-0 w-3/4"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Label htmlFor="email" className="w-1/4 my-auto">
+                    Email
+                  </Label>
+                  <Input
+                    type="email"
+                    id="email"
+                    value={form.email}
+                    onChange={e =>
+                      setForm(prev => ({ ...prev, email: e.target.value }))
+                    }
+                    placeholder="goodman@gmail.com"
+                    className="mb-3 dark:border-white/20 h-8 m-0 w-3/4"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button type="submit" size="sm" className="w-full font-bold">
+                    Tambah anggota
+                  </Button>
+                </div>
+              </form>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
       <div className="flex flex-col">
         <Table className="my-1">
@@ -128,6 +240,7 @@ function Member() {
               <TableHead>Tabungan</TableHead>
               <TableHead>Pinjaman</TableHead>
               <TableHead>Bergabung Pada</TableHead>
+              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -145,6 +258,15 @@ function Member() {
                     : `${data.borrowedMoney}.00`
                 }`}</TableCell>
                 <TableCell>{dateFormater(data.createdAt)}</TableCell>
+                <TableCell>
+                  <PopoverForm.Member
+                    uuid={data.uuid}
+                    firstName={data.firstName}
+                    lastName={data.lastName}
+                    email={data.email}
+                    setData={setData}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -153,10 +275,10 @@ function Member() {
           <p className="my-auto text-sm">
             {page} dari {max} Halaman
           </p>
-          <Button variant="outline" onClick={() => setPage(page - 1)}>
+          <Button variant="outline" size="sm" onClick={() => setPage(page - 1)}>
             Sebelumnya
           </Button>
-          <Button variant="outline" onClick={() => setPage(page + 1)}>
+          <Button variant="outline" size="sm" onClick={() => setPage(page + 1)}>
             Selanjutnya
           </Button>
         </div>

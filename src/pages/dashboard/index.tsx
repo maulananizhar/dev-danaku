@@ -115,7 +115,7 @@ export default function Dashboard() {
                 Dana<span className="text-yellow-400">Ku</span>
               </Link>
             </div>
-            <div className="flex gap-6 my-auto text-sm">
+            <div className="md:flex gap-6 my-auto text-sm hidden">
               <Link href="/dashboard" className="">
                 Dashboard
               </Link>
@@ -153,6 +153,30 @@ export default function Dashboard() {
                   </p>
                   <p className="text-xs font-normal">{auth.email}</p>
                 </DropdownMenuLabel>
+                <div className="block md:hidden">
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Link href="/dashboard" className="">
+                        Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Link
+                        href="/dashboard/membership"
+                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
+                        Keanggotaan
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Link
+                        href="/dashboard/product"
+                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
+                        Produk
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem className="cursor-pointer">
@@ -187,8 +211,8 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="flex w-full mt-8">
-          <div className="w-1/4">
+        <div className="flex flex-wrap w-full mt-8">
+          <div className="lg:w-1/4 md:w-1/2 w-full lg:my-0 my-2">
             <Card className="mx-2 dark:bg-[#121212]">
               <CardContent className="py-6">
                 <div className="flex items-center mb-2 text-sm font-bold">
@@ -200,7 +224,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
-          <div className="w-1/4">
+          <div className="lg:w-1/4 md:w-1/2 w-full lg:my-0 my-2">
             <Card className="mx-2 dark:bg-[#121212]">
               <CardContent className="py-6">
                 <div className="flex items-center mb-2 text-sm font-bold">
@@ -212,7 +236,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
-          <div className="w-1/4">
+          <div className="lg:w-1/4 md:w-1/2 w-full lg:my-0 my-2">
             <Card className="mx-2 dark:bg-[#121212]">
               <CardContent className="py-6">
                 <div className="flex items-center mb-2 text-sm font-bold">
@@ -224,7 +248,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
-          <div className="w-1/4">
+          <div className="lg:w-1/4 md:w-1/2 w-full lg:my-0 my-2">
             <Card className="mx-2 dark:bg-[#121212]">
               <CardContent className="py-6">
                 <div className="flex items-center mb-2 text-sm font-bold">
@@ -238,13 +262,13 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="flex w-full mt-8">
-          <div className="w-3/5">
+        <div className="flex flex-wrap w-full mt-8">
+          <div className="lg:w-3/5 w-full">
             <Card className="mx-2 dark:bg-[#121212]">
               <CardContent></CardContent>
             </Card>
           </div>
-          <div className="w-2/5">
+          <div className="lg:w-2/5 w-full">
             <Card className="mx-2 dark:bg-[#121212]">
               <CardContent className="flex flex-col py-6">
                 <div className="mb-3">
@@ -265,9 +289,9 @@ export default function Dashboard() {
                         />
                       </Avatar>
                     </div>
-                    <div className="text-sm ml-4">
-                      <p className="font-bold">Dodi Cahyadi</p>
-                      <p>dodicahyadi@gmail.com</p>
+                    <div className="text-sm ml-4 mr-4 truncate">
+                      <p className="font-bold truncate">Dodi Cahyadi</p>
+                      <p className="truncate">dodicahyadi@gmail.com</p>
                     </div>
                     <div className="ml-auto">
                       <p className="text-lg font-bold">Rp450.000</p>
@@ -282,9 +306,9 @@ export default function Dashboard() {
                         />
                       </Avatar>
                     </div>
-                    <div className="text-sm ml-4">
-                      <p className="font-bold">Irma Rosi</p>
-                      <p>irmarosi@gmail.com</p>
+                    <div className="text-sm ml-4 mr-4 truncate">
+                      <p className="font-bold truncate">Irma Rosi</p>
+                      <p className="truncate">irmarosi@gmail.com</p>
                     </div>
                     <div className="ml-auto">
                       <p className="text-lg font-bold">Rp78.000</p>

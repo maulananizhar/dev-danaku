@@ -112,7 +112,7 @@ export default function Dashboard() {
                 Dana<span className="text-yellow-400">Ku</span>
               </Link>
             </div>
-            <div className="flex gap-6 my-auto text-sm">
+            <div className="md:flex gap-6 my-auto text-sm hidden">
               <Link
                 href="/dashboard"
                 className="opacity-80 hover:opacity-100 duration-75 ease-out">
@@ -150,6 +150,30 @@ export default function Dashboard() {
                   </p>
                   <p className="text-xs font-normal">{auth.email}</p>
                 </DropdownMenuLabel>
+                <div className="block md:hidden">
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Link
+                        href="/dashboard"
+                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
+                        Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Link href="/dashboard/membership" className="">
+                        Keanggotaan
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Link
+                        href="/dashboard/product"
+                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
+                        Produk
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem className="cursor-pointer">
@@ -175,11 +199,11 @@ export default function Dashboard() {
 
       <main className="container flex flex-col my-8">
         <Tabs defaultValue="anggota">
-          <div className="flex w-full">
-            <div>
+          <div className="flex w-full flex-wrap">
+            <div className="w-full md:w-[230px]">
               <p className="text-4xl font-bold">Keanggotaan</p>
             </div>
-            <div className="flex ml-auto gap-4 w-[400px]">
+            <div className="flex ml-auto gap-4 md:w-[400px] w-full mt-4 md:my-auto">
               <TabsList className="grid w-full grid-cols-4 dark:bg-[#191919]">
                 <TabsTrigger
                   value="anggota"
