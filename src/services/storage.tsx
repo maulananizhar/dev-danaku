@@ -30,8 +30,24 @@ export const AuthContext = createContext({
 
 export const MembershipContext = createContext({
   memberData: [],
+  search: "",
+  length: 0,
+  page: 1,
+  max: 1,
 
   setMemberData(data: any) {
     this.memberData = data;
+  },
+  setSearch(search: any) {
+    this.search = search;
+  },
+  setLength(length: any) {
+    this.length = length;
+  },
+  setPage(page: any) {
+    this.page = page;
+  },
+  setMax(max: any) {
+    this.max = max;
   },
 });
