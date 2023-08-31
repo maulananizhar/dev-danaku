@@ -22,6 +22,8 @@ import { Label } from "@/components/ui/label";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { PopoverForm } from "@/components/others/popover-form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent } from "../ui/card";
+import { Avatar, AvatarImage } from "../ui/avatar";
 
 function Member() {
   const router = useRouter();
@@ -231,7 +233,7 @@ function Member() {
         </div>
       </div>
       <div className="flex flex-col">
-        <Table className="my-1">
+        <Table className="my-1 md:table hidden">
           <TableHeader>
             <TableRow>
               <TableHead>ID Anggota</TableHead>
@@ -271,13 +273,77 @@ function Member() {
             ))}
           </TableBody>
         </Table>
-        <div className="flex ml-auto gap-4">
-          <p className="my-auto text-sm">
+        <div className="md:hidden flex flex-wrap my-4">
+          {data.map((data: any, index: number) => (
+            <div className="sm:w-1/2 w-full" key={index}>
+              <Card className="mx-2 my-2 dark:bg-[#191919]">
+                <CardContent className="pt-4 pb-6">
+                  <div className="flex justify-between items-center">
+                    <p className="ml-3 opacity-80">{memberIdMaker(data.id)}</p>
+                    <PopoverForm.Member
+                      uuid={data.uuid}
+                      firstName={data.firstName}
+                      lastName={data.lastName}
+                      email={data.email}
+                      setData={setData}
+                    />
+                  </div>
+                  <div className="flex items-center gap-4 mt-2">
+                    <Avatar>
+                      <AvatarImage
+                        src={`https://api.dicebear.com/7.x/lorelei/jpg?seed=${data.firstName}${data.lastName}`}
+                        alt={`${data.firstName}${data.lastName}`}
+                      />
+                    </Avatar>
+                    <p className="text-xl font-bold">
+                      {`${data.firstName} ${data.lastName}`}
+                    </p>
+                  </div>
+                  <div className="flex flex-row mt-2">
+                    <div className="flex flex-col text-sm sm:w-1/2 w-1/3 opacity-80">
+                      <p className="truncate">Email</p>
+                      <p className="truncate">Tabungan</p>
+                      <p className="truncate">Pinjaman</p>
+                      <p className="truncate">Bergabung pada</p>
+                    </div>
+                    <div className="flex flex-col text-sm sm:w-1/2 w-2/3 truncate">
+                      <p className="truncate">: {data.email}</p>
+                      <p className="truncate">
+                        :{" "}
+                        {`Rp${
+                          data.moneySavings == null
+                            ? `0.00`
+                            : `${data.moneySavings}.00`
+                        }`}
+                      </p>
+                      <p className="truncate">
+                        :{" "}
+                        {`Rp${
+                          data.borrowedMoney == null
+                            ? `0.00`
+                            : `${data.borrowedMoney}.00`
+                        }`}
+                      </p>
+                      <p className="truncate">
+                        : {dateFormater(data.createdAt)}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </div>
+        <div className="flex md:ml-auto mx-auto gap-4">
+          <p className="my-auto text-sm md:block hidden">
             {page} dari {max} Halaman
           </p>
           <Button variant="outline" size="sm" onClick={() => setPage(page - 1)}>
             Sebelumnya
           </Button>
+          <p className="my-auto text-sm md:hidden block">
+            {page} dari {max}
+          </p>
           <Button variant="outline" size="sm" onClick={() => setPage(page + 1)}>
             Selanjutnya
           </Button>
