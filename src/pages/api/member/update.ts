@@ -90,7 +90,12 @@ export default async function handler(
     return res
       .status(201)
       .json({ status: true, message: "Anggota telah diubah", data });
-  } catch (err) {
+  } catch (err: any) {
+    if (err.code == "P2002")
+      return res
+        .status(404)
+        .json({ status: false, message: "Email terpakai!" });
+
     return res.status(500).json({
       status: false,
       message: "Kesalahan server!",

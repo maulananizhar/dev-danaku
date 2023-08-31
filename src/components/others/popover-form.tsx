@@ -62,7 +62,6 @@ function Member({ uuid, firstName, lastName, email, setData }: any) {
     } catch (err: any) {
       setStatus(err.response.data.status);
       setErrorMessage(err.response.data.message);
-      console.log(err);
     }
   }
 
