@@ -24,7 +24,7 @@ export default async function handler(
     });
 
     return res
-      .status(201)
+      .status(200)
       .json({ status: true, message: "Anggota telah dihapus", data });
   } catch (err) {
     return res.status(500).json({
