@@ -17,22 +17,23 @@ model Users {
   lastName     String   @db.VarChar(255)
   email        String   @unique @db.VarChar(255)
   password     String   @db.Text
+  balance      Float    @default(0)
   refreshToken String?  @db.Text
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
 
 model Members {
-  uuid          String   @id @default(uuid())
-  id            Int      @unique @default(autoincrement())
-  ownerId       String
-  firstName     String   @db.VarChar(255)
-  lastName      String   @db.VarChar(255)
-  email         String   @unique @db.VarChar(255)
-  moneySavings  Float?
-  borrowedMoney Float?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  uuid         String   @id @default(uuid())
+  id           Int      @unique @default(autoincrement())
+  ownerId      String
+  firstName    String   @db.VarChar(255)
+  lastName     String   @db.VarChar(255)
+  email        String   @unique @db.VarChar(255)
+  moneySavings Float?
+  moneyLoan    Float?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Transactions {
@@ -41,9 +42,35 @@ model Transactions {
   ownerId    String
   memberId   Int
   memberName String   @db.VarChar(255)
+  childId    Int
   desc       String?  @db.Text
   type       String   @db.VarChar(255)
-  date       DateTime
+  nominal    Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Loans {
+  uuid       String   @id @default(uuid())
+  id         Int      @unique @default(autoincrement())
+  ownerId    String
+  memberId   Int
+  memberName String   @db.VarChar(255)
+  desc       String?  @db.Text
+  type       String   @db.VarChar(255)
+  nominal    Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Savings {
+  uuid       String   @id @default(uuid())
+  id         Int      @unique @default(autoincrement())
+  ownerId    String
+  memberId   Int
+  memberName String   @db.VarChar(255)
+  desc       String?  @db.Text
+  type       String   @db.VarChar(255)
   nominal    Float
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
