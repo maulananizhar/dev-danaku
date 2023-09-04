@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MembershipPage } from "@/components/others/membership-page";
+import { MembershipPage } from "@/view/membership-page";
 
 export default function Dashboard() {
   const axiosToken = axios.create();
@@ -138,8 +138,8 @@ export default function Dashboard() {
               <DropdownMenuTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-                    src={`https://api.dicebear.com/7.x/lorelei/jpg?seed=${auth.firstName}${auth.lastName}`}
-                    alt={`${auth.firstName}${auth.lastName}`}
+                    src={`https://api.dicebear.com/7.x/lorelei/jpg?seed=${auth.firstName} ${auth.lastName}`}
+                    alt={`${auth.firstName} ${auth.lastName}`}
                   />
                 </Avatar>
               </DropdownMenuTrigger>
@@ -239,10 +239,10 @@ export default function Dashboard() {
             </TabsContent>
 
             <TabsContent value="pinjaman">
-              <p>Pinjaman</p>
+              <MembershipPage.Loans />
             </TabsContent>
             <TabsContent value="tabungan">
-              <p>Tabungan</p>
+              <MembershipPage.Savings />
             </TabsContent>
           </div>
         </Tabs>

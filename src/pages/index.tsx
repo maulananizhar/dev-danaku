@@ -11,7 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ReasonCard } from "@/components/others/reason-card";
+import { ReasonCard } from "@/view/reason-card";
 
 export default function Home() {
   const [isOpen, setOpen] = useState(false);
