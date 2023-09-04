@@ -22,6 +22,7 @@
 .DS_Store
 *.pem
 request.rest
+*.rest
 
 # debug
 npm-debug.log*
