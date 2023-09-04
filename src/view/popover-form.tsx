@@ -101,8 +101,8 @@ function Member({ uuid, firstName, lastName, email, setData }: any) {
           <div className="flex gap-4">
             <Avatar>
               <AvatarImage
-                src={`https://api.dicebear.com/7.x/lorelei/jpg?seed=${firstName}${lastName}`}
-                alt={`${firstName}${lastName}`}
+                src={`https://api.dicebear.com/7.x/lorelei/jpg?seed=${firstName} ${lastName}`}
+                alt={`${firstName} ${lastName}`}
               />
             </Avatar>
             <p className="my-auto font-bold text-lg">{`${firstName} ${lastName}`}</p>
@@ -171,4 +171,153 @@ function Member({ uuid, firstName, lastName, email, setData }: any) {
   );
 }
 
-export const PopoverForm = { Member };
+function Borrow({
+  name,
+  transactionId,
+  memberId,
+  nominal,
+  desc,
+  setData,
+}: any) {
+  const auth = useContext(AuthContext);
+  const member = useContext(MembershipContext);
+  const router = useRouter();
+  const [form, setForm] = useState({
+    nominal,
+    desc,
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState(true);
+
+  async function borrowFetcher(
+    name: string,
+    uuid: string,
+    page: number,
+    limit: number
+  ) {
+    try {
+      const response = await axios.post("/api/transactions/borrow", {
+        name,
+        ownerId: uuid,
+        page,
+        limit,
+      });
+      setData(response.data.data);
+    } catch (err) {
+      router.push("/login");
+    }
+  }
+
+  async function updateBorrow(e: any) {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/transactions/borrow/update", {
+        transactionId,
+        memberId,
+        desc: form.desc,
+        nominal: form.nominal,
+      });
+      borrowFetcher(member.search, auth.uuid, member.page, 10);
+      setIsOpen(false);
+      setStatus(true);
+    } catch (err: any) {
+      setStatus(err.response.data.status);
+      setErrorMessage(err.response.data.message);
+    }
+  }
+
+  async function deleteBorrow() {
+    try {
+      setIsOpen(false);
+      const response = await axios.post("/api/transactions/borrow/delete", {
+        transactionId,
+        memberId,
+        nominal,
+      });
+      borrowFetcher(member.search, auth.uuid, member.page, 10);
+      setStatus(true);
+    } catch (err) {
+      setStatus(true);
+    }
+  }
+
+  return (
+    <Popover open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
+      <PopoverTrigger>
+        <Button
+          size="icon"
+          variant="ghost"
+          className="font-bold dark:text-white"
+          onClick={() => setForm({ nominal, desc })}>
+          <DotsVerticalIcon className="" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="end" className="dark:bg-[#121212] w-[350px]">
+        <form className="flex flex-col gap-3" onSubmit={updateBorrow}>
+          <Alert
+            variant="destructive"
+            className={`justify-center py-2 mb-4 ${
+              status ? "hidden" : "flex"
+            }`}>
+            <AlertDescription>{errorMessage}</AlertDescription>
+          </Alert>
+          <div className="flex gap-4">
+            <Avatar>
+              <AvatarImage
+                src={`https://api.dicebear.com/7.x/lorelei/jpg?seed=${name}`}
+                alt={`${name}`}
+              />
+            </Avatar>
+            <p className="my-auto font-bold text-lg">{`${name}`}</p>
+          </div>
+          <div className="flex gap-2">
+            <Label htmlFor="nominal" className="w-1/4 my-auto">
+              Nominal
+            </Label>
+            <Input
+              type="number"
+              id="nominal"
+              value={form.nominal}
+              onChange={e =>
+                setForm(prev => ({ ...prev, nominal: e.target.value }))
+              }
+              placeholder="200000"
+              className="mb-3 dark:border-white/20 h-8 m-0 w-3/4"
+            />
+          </div>
+          <div className="flex gap-2">
+            <Label htmlFor="desc" className="w-1/4 my-auto">
+              Deskripsi
+            </Label>
+            <Input
+              type="text"
+              id="desc"
+              value={form.desc}
+              onChange={e =>
+                setForm(prev => ({ ...prev, desc: e.target.value }))
+              }
+              placeholder="Meminjam"
+              className="mb-3 dark:border-white/20 h-8 m-0 w-3/4"
+            />
+          </div>
+          <div className="flex gap-2">
+            <Button type="submit" size="sm" className="w-1/2 font-bold">
+              Ubah data
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="destructive"
+              className="w-1/2 font-bold"
+              onClick={deleteBorrow}>
+              Hapus data
+            </Button>
+          </div>
+        </form>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+export const PopoverForm = { Member, Borrow };
