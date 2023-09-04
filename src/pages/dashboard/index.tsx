@@ -30,6 +30,13 @@ export default function Dashboard() {
   const router = useRouter();
   const auth = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [dashboardData, setDashboardData] = useState({
+    userBalance: 0,
+    loanTotal: 0,
+    transaction: 0,
+    member: 0,
+    lastTransactions: [],
+  });
 
   async function refreshToken() {
     try {
@@ -79,16 +86,28 @@ export default function Dashboard() {
 
   async function logoutHandler() {
     try {
-      const data = await axios.delete(`/api/auth/logout`);
+      const response = await axios.delete(`/api/auth/logout`);
       router.push("/login");
     } catch (error) {
       router.push("/login");
-      // console.log(error);
     }
   }
 
+  async function dashboardFetcher() {
+    try {
+      const response = await axios.post("/api/other/dashboard", {
+        userId: auth.uuid,
+      });
+      setDashboardData(response.data.data);
+    } catch (err) {}
+  }
+
   useEffect(() => {
-    refreshToken();
+    async function fetcher() {
+      await refreshToken();
+      await dashboardFetcher();
+    }
+    fetcher();
   }, []);
 
   if (isLoading) {
@@ -141,8 +160,8 @@ export default function Dashboard() {
               <DropdownMenuTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-                    src={`https://api.dicebear.com/7.x/lorelei/jpg?seed=${auth.firstName}${auth.lastName}`}
-                    alt={`${auth.firstName}${auth.lastName}`}
+                    src={`https://api.dicebear.com/7.x/lorelei/jpg?seed=${auth.firstName} ${auth.lastName}`}
+                    alt={`${auth.firstName} ${auth.lastName}`}
                   />
                 </Avatar>
               </DropdownMenuTrigger>
@@ -205,10 +224,6 @@ export default function Dashboard() {
           <div>
             <p className="text-4xl font-bold">Dashboard</p>
           </div>
-          <div className="flex ml-auto gap-4">
-            <p>Select</p>
-            <Button className="font-bold">Pilih</Button>
-          </div>
         </div>
 
         <div className="flex flex-wrap w-full mt-8">
@@ -219,8 +234,19 @@ export default function Dashboard() {
                   <p className="text-yellow-400">Saldo koperasi</p>
                   <LightningBoltIcon className="ml-auto" />
                 </div>
-                <p className="text-3xl font-bold">Rp12.343.000</p>
-                <p className="text-xs opacity-80">+20.4% dari bulan lalu</p>
+                <p className="text-3xl font-bold">
+                  Rp
+                  {`${
+                    dashboardData.userBalance == null
+                      ? `0.00`
+                      : `${dashboardData.userBalance.toLocaleString(
+                          "id-ID"
+                        )}.00`
+                  }`}
+                </p>
+                <p className="text-xs opacity-80">
+                  Jumlah saldo kotor koperasi
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -231,8 +257,17 @@ export default function Dashboard() {
                   <p className="text-yellow-400">Total pinjaman</p>
                   <FileTextIcon className="ml-auto" />
                 </div>
-                <p className="text-3xl font-bold">Rp4.623.000</p>
-                <p className="text-xs opacity-80">+11.9% dari bulan lalu</p>
+                <p className="text-3xl font-bold">
+                  Rp
+                  {`${
+                    dashboardData.loanTotal == null
+                      ? `0.00`
+                      : `${dashboardData.loanTotal.toLocaleString("id-ID")}.00`
+                  }`}
+                </p>
+                <p className="text-xs opacity-80">
+                  Jumlah pinjaman belum lunas
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -243,8 +278,10 @@ export default function Dashboard() {
                   <p className="text-yellow-400">Total transaksi</p>
                   <LayersIcon className="ml-auto" />
                 </div>
-                <p className="text-3xl font-bold">+245</p>
-                <p className="text-xs opacity-80">+4.8% dari bulan lalu</p>
+                <p className="text-3xl font-bold">
+                  {dashboardData.transaction}
+                </p>
+                <p className="text-xs opacity-80">Jumlah transaksi berhasil</p>
               </CardContent>
             </Card>
           </div>
@@ -252,11 +289,11 @@ export default function Dashboard() {
             <Card className="mx-2 dark:bg-[#121212]">
               <CardContent className="py-6">
                 <div className="flex items-center mb-2 text-sm font-bold">
-                  <p className="text-yellow-400">Total penjualan</p>
+                  <p className="text-yellow-400">Total anggota</p>
                   <CubeIcon className="ml-auto" />
                 </div>
-                <p className="text-3xl font-bold">+5.435</p>
-                <p className="text-xs opacity-80">+1.2% dari bulan lalu</p>
+                <p className="text-3xl font-bold">{dashboardData.member}</p>
+                <p className="text-xs opacity-80">Jumlah anggota koperasi</p>
               </CardContent>
             </Card>
           </div>
@@ -264,8 +301,15 @@ export default function Dashboard() {
 
         <div className="flex flex-wrap w-full mt-8">
           <div className="lg:w-3/5 w-full">
-            <Card className="mx-2 dark:bg-[#121212]">
-              <CardContent></CardContent>
+            <Card className="mx-2 dark:bg-[#121212] min-h-[423px] h-[423px] max-h-[423px]">
+              <CardContent className="flex flex-col py-6">
+                <div className="mb-3">
+                  <p className="font-bold text-yellow-400">Pintasan</p>
+                  <p className="opacity-80 text-sm">
+                    Lakukan transaksi dengan cepat disini
+                  </p>
+                </div>
+              </CardContent>
             </Card>
           </div>
           <div className="lg:w-2/5 w-full">
@@ -276,44 +320,36 @@ export default function Dashboard() {
                     Transaksi terakhir
                   </p>
                   <p className="opacity-80 text-sm">
-                    Anda melakukan 245 transaksi bulan ini
+                    Anda melakukan total {dashboardData.transaction} transaksi
                   </p>
                 </div>
                 <div className="flex flex-col w-full">
-                  <div className="flex items-center w-full my-3">
-                    <div>
-                      <Avatar>
-                        <AvatarImage
-                          src="https://api.dicebear.com/7.x/lorelei/jpg?seed=dodi"
-                          alt="Buena"
-                        />
-                      </Avatar>
+                  {dashboardData.lastTransactions.map((data: any, index) => (
+                    <div className="flex items-center w-full my-3" key={index}>
+                      <div>
+                        <Avatar>
+                          <AvatarImage
+                            src={`https://api.dicebear.com/7.x/lorelei/jpg?seed=${data.memberName}`}
+                            alt={data.memberName}
+                          />
+                        </Avatar>
+                      </div>
+                      <div className="text-sm ml-4 mr-4 truncate">
+                        <p className="font-bold truncate">{data.memberName}</p>
+                        <p className="truncate">{data.desc}</p>
+                      </div>
+                      <div className="ml-auto">
+                        <p className="text-lg font-bold">
+                          Rp
+                          {`${
+                            data == null
+                              ? `0.00`
+                              : `${data.nominal.toLocaleString("id-ID")}.00`
+                          }`}
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-sm ml-4 mr-4 truncate">
-                      <p className="font-bold truncate">Dodi Cahyadi</p>
-                      <p className="truncate">dodicahyadi@gmail.com</p>
-                    </div>
-                    <div className="ml-auto">
-                      <p className="text-lg font-bold">Rp450.000</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center w-full my-3">
-                    <div>
-                      <Avatar>
-                        <AvatarImage
-                          src="https://api.dicebear.com/7.x/lorelei/jpg?seed=irma"
-                          alt="Buena"
-                        />
-                      </Avatar>
-                    </div>
-                    <div className="text-sm ml-4 mr-4 truncate">
-                      <p className="font-bold truncate">Irma Rosi</p>
-                      <p className="truncate">irmarosi@gmail.com</p>
-                    </div>
-                    <div className="ml-auto">
-                      <p className="text-lg font-bold">Rp78.000</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
