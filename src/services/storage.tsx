@@ -30,6 +30,7 @@ export const AuthContext = createContext({
 
 export const MembershipContext = createContext({
   memberData: [],
+  borrowedData: [],
   search: "",
   length: 0,
   page: 1,
@@ -37,6 +38,9 @@ export const MembershipContext = createContext({
 
   setMemberData(data: any) {
     this.memberData = data;
+  },
+  setBorrowedData(data: any) {
+    this.borrowedData = data;
   },
   setSearch(search: any) {
     this.search = search;
