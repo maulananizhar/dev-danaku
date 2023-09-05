@@ -639,8 +639,8 @@ function Transactions() {
                     ? "Nama anggota"
                     : transactionForm.memberName}
                 </p>
-                <div className="flex gap-3">
-                  <Label htmlFor="firstName" className="w-1/5 my-auto truncate">
+                <form onSubmit={memberTransactionSearch} className="flex gap-3">
+                  <Label htmlFor="memberId" className="w-1/5 my-auto truncate">
                     ID Anggota
                   </Label>
                   <Input
@@ -657,15 +657,15 @@ function Transactions() {
                     className="mb-3 dark:border-white/20 h-8 m-0 w-3/5"
                   />
                   <Button
-                    type="button"
+                    type="submit"
                     size="sm"
                     className="w-1/5 font-bold"
                     onClick={memberTransactionSearch}>
                     Cari
                   </Button>
-                </div>
+                </form>
                 <div className="flex gap-2">
-                  <Label htmlFor="lastName" className="w-1/5 my-auto">
+                  <Label htmlFor="nominal" className="w-1/5 my-auto">
                     Nominal
                   </Label>
                   <Input
@@ -683,7 +683,7 @@ function Transactions() {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Label htmlFor="email" className="w-1/5 my-auto">
+                  <Label htmlFor="desc" className="w-1/5 my-auto">
                     Deskripsi
                   </Label>
                   <Input
@@ -1113,8 +1113,8 @@ function Loans() {
                     ? "Nama anggota"
                     : loanForm.memberName}
                 </p>
-                <div className="flex gap-3">
-                  <Label htmlFor="firstName" className="w-1/5 my-auto truncate">
+                <form onSubmit={memberLoanSearch} className="flex gap-3">
+                  <Label htmlFor="memberId" className="w-1/5 my-auto truncate">
                     ID Anggota
                   </Label>
                   <Input
@@ -1128,15 +1128,15 @@ function Loans() {
                     className="mb-3 dark:border-white/20 h-8 m-0 w-3/5"
                   />
                   <Button
-                    type="button"
+                    type="submit"
                     size="sm"
                     className="w-1/5 font-bold"
                     onClick={memberLoanSearch}>
                     Cari
                   </Button>
-                </div>
+                </form>
                 <div className="flex gap-2">
-                  <Label htmlFor="lastName" className="w-1/5 my-auto">
+                  <Label htmlFor="nominal" className="w-1/5 my-auto">
                     Nominal
                   </Label>
                   <Input
@@ -1154,7 +1154,7 @@ function Loans() {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Label htmlFor="email" className="w-1/5 my-auto">
+                  <Label htmlFor="desc" className="w-1/5 my-auto">
                     Deskripsi
                   </Label>
                   <Input
@@ -1201,8 +1201,8 @@ function Loans() {
                     ? "Nama anggota"
                     : rePaymentForm.memberName}
                 </p>
-                <div className="flex gap-3">
-                  <Label htmlFor="firstName" className="w-1/5 my-auto truncate">
+                <form onSubmit={memberRePaymentSearch} className="flex gap-3">
+                  <Label htmlFor="memberId" className="w-1/5 my-auto truncate">
                     ID Anggota
                   </Label>
                   <Input
@@ -1219,15 +1219,15 @@ function Loans() {
                     className="mb-3 dark:border-white/20 h-8 m-0 w-3/5"
                   />
                   <Button
-                    type="button"
+                    type="submit"
                     size="sm"
                     className="w-1/5 font-bold"
                     onClick={memberRePaymentSearch}>
                     Cari
                   </Button>
-                </div>
+                </form>
                 <div className="flex gap-2">
-                  <Label htmlFor="lastName" className="w-1/5 my-auto">
+                  <Label htmlFor="nominal" className="w-1/5 my-auto">
                     Nominal
                   </Label>
                   <Input
@@ -1245,7 +1245,7 @@ function Loans() {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Label htmlFor="email" className="w-1/5 my-auto">
+                  <Label htmlFor="desc" className="w-1/5 my-auto">
                     Deskripsi
                   </Label>
                   <Input
@@ -1673,8 +1673,8 @@ function Savings() {
                     ? "Nama anggota"
                     : savingForm.memberName}
                 </p>
-                <div className="flex gap-3">
-                  <Label htmlFor="firstName" className="w-1/5 my-auto truncate">
+                <form onSubmit={memberSavingSearch} className="flex gap-3">
+                  <Label htmlFor="memberId" className="w-1/5 my-auto truncate">
                     ID Anggota
                   </Label>
                   <Input
@@ -1691,15 +1691,15 @@ function Savings() {
                     className="mb-3 dark:border-white/20 h-8 m-0 w-3/5"
                   />
                   <Button
-                    type="button"
+                    type="submit"
                     size="sm"
                     className="w-1/5 font-bold"
                     onClick={memberSavingSearch}>
                     Cari
                   </Button>
-                </div>
+                </form>
                 <div className="flex gap-2">
-                  <Label htmlFor="lastName" className="w-1/5 my-auto">
+                  <Label htmlFor="nominal" className="w-1/5 my-auto">
                     Nominal
                   </Label>
                   <Input
@@ -1717,7 +1717,7 @@ function Savings() {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Label htmlFor="email" className="w-1/5 my-auto">
+                  <Label htmlFor="desc" className="w-1/5 my-auto">
                     Deskripsi
                   </Label>
                   <Input
@@ -1764,8 +1764,8 @@ function Savings() {
                     ? "Nama anggota"
                     : withdrawForm.memberName}
                 </p>
-                <div className="flex gap-3">
-                  <Label htmlFor="firstName" className="w-1/5 my-auto truncate">
+                <form onSubmit={memberWithdrawSearch} className="flex gap-3">
+                  <Label htmlFor="memberId" className="w-1/5 my-auto truncate">
                     ID Anggota
                   </Label>
                   <Input
@@ -1782,15 +1782,15 @@ function Savings() {
                     className="mb-3 dark:border-white/20 h-8 m-0 w-3/5"
                   />
                   <Button
-                    type="button"
+                    type="submit"
                     size="sm"
                     className="w-1/5 font-bold"
                     onClick={memberWithdrawSearch}>
                     Cari
                   </Button>
-                </div>
+                </form>
                 <div className="flex gap-2">
-                  <Label htmlFor="lastName" className="w-1/5 my-auto">
+                  <Label htmlFor="nominal" className="w-1/5 my-auto">
                     Nominal
                   </Label>
                   <Input
@@ -1808,7 +1808,7 @@ function Savings() {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Label htmlFor="email" className="w-1/5 my-auto">
+                  <Label htmlFor="desc" className="w-1/5 my-auto">
                     Deskripsi
                   </Label>
                   <Input

@@ -24,6 +24,9 @@ import {
   LayersIcon,
   LightningBoltIcon,
 } from "@radix-ui/react-icons";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export default function Dashboard() {
   const axiosToken = axios.create();
@@ -37,6 +40,16 @@ export default function Dashboard() {
     member: 0,
     lastTransactions: [],
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [status, setStatus] = useState(true);
+  const [transactionForm, setTransactionForm] = useState({
+    memberId: 0,
+    memberName: "",
+    formId: "",
+    desc: "",
+    nominal: "",
+  });
+  const [isTransactionOpen, setIsTransactionOpen] = useState(false);
 
   async function refreshToken() {
     try {
@@ -102,6 +115,55 @@ export default function Dashboard() {
     } catch (err) {}
   }
 
+  async function addTransaction(e: any) {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/transactions/add", {
+        userId: auth.uuid,
+        memberId: transactionForm.memberId,
+        desc: transactionForm.desc,
+        nominal: transactionForm.nominal,
+      });
+      setIsTransactionOpen(false);
+      setTransactionForm({
+        memberId: 0,
+        memberName: "",
+        formId: "",
+        desc: "",
+        nominal: "",
+      });
+      dashboardFetcher();
+    } catch (err: any) {
+      setStatus(err.response.data.status);
+      setErrorMessage(err.response.data.message);
+    }
+  }
+
+  async function memberTransactionSearch(e: any) {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/member/get", {
+        ownerId: auth.uuid,
+        memberId: transactionForm.formId,
+      });
+      setTransactionForm(prev => ({
+        ...prev,
+        memberId: response.data.data.id,
+      }));
+      setTransactionForm(prev => ({
+        ...prev,
+        memberName: `${response.data.data.firstName} ${response.data.data.lastName}`,
+      }));
+      setStatus(true);
+      setErrorMessage("");
+    } catch (err: any) {
+      setTransactionForm(prev => ({ ...prev, memberId: 0 }));
+      setTransactionForm(prev => ({ ...prev, memberName: "" }));
+      setStatus(err.response.data.status);
+      setErrorMessage(err.response.data.message);
+    }
+  }
+
   useEffect(() => {
     async function fetcher() {
       await refreshToken();
@@ -123,6 +185,7 @@ export default function Dashboard() {
     <div className="bg-white dark:bg-[#121212]">
       <Head>
         <title>Dashboard</title>
+        <link rel="icon" href="/danaku.png" />
       </Head>
       <nav className="border-b border-opacity-10 shadow-sm sticky top-0 z-40 bg-white dark:bg-[#121212]">
         <div className="container flex py-4 justify-between">
@@ -144,9 +207,9 @@ export default function Dashboard() {
                 Keanggotaan
               </Link>
               <Link
-                href="/dashboard/product"
+                href="/dashboard/news"
                 className="opacity-80 hover:opacity-100 duration-75 ease-out">
-                Produk
+                Berita
               </Link>
               <Link
                 href="/dashboard/settings"
@@ -189,9 +252,9 @@ export default function Dashboard() {
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
                       <Link
-                        href="/dashboard/product"
+                        href="/dashboard/news"
                         className="opacity-80 hover:opacity-100 duration-75 ease-out">
-                        Produk
+                        Berita
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
@@ -299,9 +362,9 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="flex flex-wrap w-full mt-8">
-          <div className="lg:w-3/5 w-full">
-            <Card className="mx-2 dark:bg-[#121212] min-h-[423px] h-[423px] max-h-[423px]">
+        <div className="flex flex-wrap w-full md:mt-8 mt-0">
+          <div className="lg:w-3/5 w-full md:mt-0 mt-6">
+            <Card className="mx-2 dark:bg-[#121212]">
               <CardContent className="flex flex-col py-6">
                 <div className="mb-3">
                   <p className="font-bold text-yellow-400">Pintasan</p>
@@ -309,10 +372,97 @@ export default function Dashboard() {
                     Lakukan transaksi dengan cepat disini
                   </p>
                 </div>
+                <form className="flex flex-col gap-3" onSubmit={addTransaction}>
+                  <Alert
+                    variant="destructive"
+                    className={`justify-center py-2 mb-4 ${
+                      status ? "hidden" : "flex"
+                    }`}>
+                    <AlertDescription>{errorMessage}</AlertDescription>
+                  </Alert>
+                  <p className="font-bold">
+                    {transactionForm.memberName == ""
+                      ? "Nama anggota"
+                      : transactionForm.memberName}
+                  </p>
+                  <form
+                    className="flex gap-3"
+                    onSubmit={memberTransactionSearch}>
+                    <Label
+                      htmlFor="memberId"
+                      className="w-1/5 my-auto truncate">
+                      ID Anggota
+                    </Label>
+                    <Input
+                      type="number"
+                      id="memberId"
+                      value={transactionForm.formId}
+                      onChange={e =>
+                        setTransactionForm(prev => ({
+                          ...prev,
+                          formId: e.target.value,
+                        }))
+                      }
+                      placeholder="69"
+                      className="mb-3 dark:border-white/20 h-8 m-0 w-3/5"
+                    />
+                    <Button
+                      type="submit"
+                      size="sm"
+                      className="w-1/5 font-bold"
+                      onClick={memberTransactionSearch}>
+                      Cari
+                    </Button>
+                  </form>
+                  <div className="flex gap-2">
+                    <Label htmlFor="nominal" className="w-1/5 my-auto">
+                      Nominal
+                    </Label>
+                    <Input
+                      type="number"
+                      id="nominal"
+                      value={transactionForm.nominal}
+                      onChange={e =>
+                        setTransactionForm(prev => ({
+                          ...prev,
+                          nominal: e.target.value,
+                        }))
+                      }
+                      placeholder="200000"
+                      className="mb-3 dark:border-white/20 h-8 m-0 w-4/5"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Label htmlFor="desc" className="w-1/5 my-auto">
+                      Deskripsi
+                    </Label>
+                    <Input
+                      type="text"
+                      id="desc"
+                      value={transactionForm.desc}
+                      onChange={e =>
+                        setTransactionForm(prev => ({
+                          ...prev,
+                          desc: e.target.value,
+                        }))
+                      }
+                      placeholder="Menanam modal awal"
+                      className="mb-3 dark:border-white/20 h-8 m-0 w-4/5"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      type="submit"
+                      size="sm"
+                      className="w-full font-bold">
+                      Tambah transaksi
+                    </Button>
+                  </div>
+                </form>
               </CardContent>
             </Card>
           </div>
-          <div className="lg:w-2/5 w-full">
+          <div className="lg:w-2/5 w-full md:mt-0 mt-8">
             <Card className="mx-2 dark:bg-[#121212]">
               <CardContent className="flex flex-col py-6">
                 <div className="mb-3">

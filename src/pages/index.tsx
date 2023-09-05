@@ -29,6 +29,7 @@ export default function Home() {
     <div className="bg-white dark:bg-[#121212]">
       <Head>
         <title>Danaku</title>
+        <link rel="icon" href="/danaku.png" />
       </Head>
       <nav className="border-b border-opacity-10 shadow-sm sticky top-0 z-40 bg-white dark:bg-[#121212]">
         <div className="container flex py-4 justify-between">

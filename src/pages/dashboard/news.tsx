@@ -16,8 +16,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MembershipPage } from "@/view/membership-page";
 
 export default function Dashboard() {
   const axiosToken = axios.create();
@@ -100,7 +98,7 @@ export default function Dashboard() {
   return (
     <div className="bg-white dark:bg-[#121212]">
       <Head>
-        <title>Keanggotaan</title>
+        <title>Berita</title>
         <link rel="icon" href="/danaku.png" />
       </Head>
       <nav className="border-b border-opacity-10 shadow-sm sticky top-0 z-40 bg-white dark:bg-[#121212]">
@@ -119,12 +117,12 @@ export default function Dashboard() {
                 className="opacity-80 hover:opacity-100 duration-75 ease-out">
                 Dashboard
               </Link>
-              <Link href="/dashboard/membership" className="">
+              <Link
+                href="/dashboard/membership"
+                className="opacity-80 hover:opacity-100 duration-75 ease-out">
                 Keanggotaan
               </Link>
-              <Link
-                href="/dashboard/news"
-                className="opacity-80 hover:opacity-100 duration-75 ease-out">
+              <Link href="/dashboard/news" className="">
                 Berita
               </Link>
               <Link
@@ -162,14 +160,14 @@ export default function Dashboard() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
-                      <Link href="/dashboard/membership" className="">
+                      <Link
+                        href="/dashboard/membership"
+                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
                         Keanggotaan
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
-                      <Link
-                        href="/dashboard/news"
-                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
+                      <Link href="/dashboard/news" className="">
                         Berita
                       </Link>
                     </DropdownMenuItem>
@@ -198,56 +196,7 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <main className="container flex flex-col my-8">
-        <Tabs defaultValue="anggota">
-          <div className="flex w-full flex-wrap">
-            <div className="w-full md:w-[230px]">
-              <p className="text-4xl font-bold">Keanggotaan</p>
-            </div>
-            <div className="flex ml-auto gap-4 md:w-[400px] w-full mt-4 md:my-auto">
-              <TabsList className="grid w-full grid-cols-4 dark:bg-[#191919]">
-                <TabsTrigger
-                  value="anggota"
-                  className="dark:data-[state=active]:bg-[#0f0f0f]">
-                  Anggota
-                </TabsTrigger>
-                <TabsTrigger
-                  value="transaksi"
-                  className="dark:data-[state=active]:bg-[#0f0f0f]">
-                  Transaksi
-                </TabsTrigger>
-                <TabsTrigger
-                  value="pinjaman"
-                  className="dark:data-[state=active]:bg-[#0f0f0f]">
-                  Pinjaman
-                </TabsTrigger>
-                <TabsTrigger
-                  value="tabungan"
-                  className="dark:data-[state=active]:bg-[#0f0f0f]">
-                  Tabungan
-                </TabsTrigger>
-              </TabsList>
-            </div>
-          </div>
-
-          <div className="flex flex-col mt-8">
-            <TabsContent value="anggota">
-              <MembershipPage.Member />
-            </TabsContent>
-
-            <TabsContent value="transaksi">
-              <MembershipPage.Transactions />
-            </TabsContent>
-
-            <TabsContent value="pinjaman">
-              <MembershipPage.Loans />
-            </TabsContent>
-            <TabsContent value="tabungan">
-              <MembershipPage.Savings />
-            </TabsContent>
-          </div>
-        </Tabs>
-      </main>
+      <main className="container flex flex-col my-8"></main>
     </div>
   );
 }

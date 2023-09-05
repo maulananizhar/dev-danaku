@@ -86,6 +86,7 @@ export default function Register() {
     <div>
       <Head>
         <title>Register</title>
+        <link rel="icon" href="/danaku.png" />
       </Head>
       <div className="flex w-screen h-[95vh] justify-center items-center">
         <div className="sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4 w-11/12">

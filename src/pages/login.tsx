@@ -74,6 +74,7 @@ export default function Login() {
     <div>
       <Head>
         <title>Login</title>
+        <link rel="icon" href="/danaku.png" />
       </Head>
       <div className="flex w-screen h-[80vh]">
         <div className="md:w-1/4 w-11/12 mx-auto mt-[20vh]">
