@@ -27,6 +27,7 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 export default function Dashboard() {
   const axiosToken = axios.create();
@@ -50,6 +51,19 @@ export default function Dashboard() {
     nominal: "",
   });
   const [isTransactionOpen, setIsTransactionOpen] = useState(false);
+  const [news, setNews] = useState({
+    title: "China Luncurkan Platform AI Baru, Saingan ChatGPT dan Google Bard?",
+    link: "https://www.cnnindonesia.com/teknologi/20230904193933-185-994683/china-luncurkan-platform-ai-baru-saingan-chatgpt-dan-google-bard",
+    contentSnippet:
+      "China meluncurkan platform kecerdasan buatan (AI) bernama ERNIE Bot yang bakal menjadi pesaing ChatGPT dan Google Bard. Simak keunggulannya.",
+    isoDate: "2023-09-04T13:26:44.000Z",
+    image: {
+      small:
+        "https://akcdn.detik.net.id/visual/2023/06/07/ilustrasi-artificial-intelligence-ilustrasi-ai-ilustrasi-kecerdasan-buatan_169.jpeg?w=360&q=90",
+      large:
+        "https://akcdn.detik.net.id/visual/2023/06/07/ilustrasi-artificial-intelligence-ilustrasi-ai-ilustrasi-kecerdasan-buatan_169.jpeg?w=360&q=100",
+    },
+  });
 
   async function refreshToken() {
     try {
@@ -69,6 +83,17 @@ export default function Dashboard() {
     } catch (error) {
       // console.log(error);
       router.push("/login");
+    }
+  }
+
+  async function newsFetcher() {
+    try {
+      const response = await axios.get(
+        "https://berita-indo-api.vercel.app/v1/cnn-news/"
+      );
+      await setNews(response.data.data[0]);
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -169,8 +194,13 @@ export default function Dashboard() {
       await refreshToken();
       await dashboardFetcher();
     }
+    newsFetcher();
     fetcher();
   }, []);
+
+  useEffect(() => {
+    console.log(news);
+  }, [news]);
 
   if (isLoading) {
     return (
@@ -290,8 +320,8 @@ export default function Dashboard() {
         </div>
 
         <div className="flex flex-wrap w-full mt-8">
-          <div className="lg:w-1/4 md:w-1/2 w-full lg:my-0 my-2">
-            <Card className="mx-2 dark:bg-[#121212]">
+          <div className="xl:w-1/4 md:w-1/2 w-full xl:my-0 my-2">
+            <Card className="mx-2 dark:bg-[#191919]">
               <CardContent className="py-6">
                 <div className="flex items-center mb-2 text-sm font-bold">
                   <p className="text-yellow-400">Saldo koperasi</p>
@@ -313,8 +343,8 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 w-full lg:my-0 my-2">
-            <Card className="mx-2 dark:bg-[#121212]">
+          <div className="xl:w-1/4 md:w-1/2 w-full xl:my-0 my-2">
+            <Card className="mx-2 dark:bg-[#191919]">
               <CardContent className="py-6">
                 <div className="flex items-center mb-2 text-sm font-bold">
                   <p className="text-yellow-400">Total pinjaman</p>
@@ -334,8 +364,8 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 w-full lg:my-0 my-2">
-            <Card className="mx-2 dark:bg-[#121212]">
+          <div className="xl:w-1/4 md:w-1/2 w-full xl:my-0 my-2">
+            <Card className="mx-2 dark:bg-[#191919]">
               <CardContent className="py-6">
                 <div className="flex items-center mb-2 text-sm font-bold">
                   <p className="text-yellow-400">Total transaksi</p>
@@ -348,8 +378,8 @@ export default function Dashboard() {
               </CardContent>
             </Card>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 w-full lg:my-0 my-2">
-            <Card className="mx-2 dark:bg-[#121212]">
+          <div className="xl:w-1/4 md:w-1/2 w-full xl:my-0 my-2">
+            <Card className="mx-2 dark:bg-[#191919]">
               <CardContent className="py-6">
                 <div className="flex items-center mb-2 text-sm font-bold">
                   <p className="text-yellow-400">Total anggota</p>
@@ -364,7 +394,7 @@ export default function Dashboard() {
 
         <div className="flex flex-wrap w-full md:mt-8 mt-0">
           <div className="lg:w-3/5 w-full md:mt-0 mt-6">
-            <Card className="mx-2 dark:bg-[#121212]">
+            <Card className="mx-2 dark:bg-[#191919]">
               <CardContent className="flex flex-col py-6">
                 <div className="mb-3">
                   <p className="font-bold text-yellow-400">Pintasan</p>
@@ -461,9 +491,32 @@ export default function Dashboard() {
                 </form>
               </CardContent>
             </Card>
+            <Card className="mx-2 mt-4 mb-4 lg:mb-0 dark:bg-[#191919] dark:hover:bg-[#151515] duration-200">
+              <Link
+                className="flex py-2 px-2 group"
+                href={news.link}
+                target="_blank">
+                <Image
+                  src={news.image.large}
+                  alt="news"
+                  height={100}
+                  width={150}
+                  priority
+                  className="rounded-md group-hover:brightness-75 duration-200"
+                />
+                <div className="flex flex-col py-2 px-4">
+                  <p className="font-bold leading-5 line-clamp-1">
+                    {news.title}
+                  </p>
+                  <p className="opacity-80 text-sm mt-2 line-clamp-2">
+                    {news.contentSnippet}
+                  </p>
+                </div>
+              </Link>
+            </Card>
           </div>
-          <div className="lg:w-2/5 w-full md:mt-0 mt-8">
-            <Card className="mx-2 dark:bg-[#121212]">
+          <div className="lg:w-2/5 w-full md:mt-0 mt-4">
+            <Card className="mx-2 dark:bg-[#191919]">
               <CardContent className="flex flex-col py-6">
                 <div className="mb-3">
                   <p className="font-bold text-yellow-400">

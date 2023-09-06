@@ -16,6 +16,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { NewsPage } from "@/view/news-page";
 
 export default function Dashboard() {
   const axiosToken = axios.create();
@@ -196,7 +198,54 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <main className="container flex flex-col my-8"></main>
+      <main className="container flex flex-col my-8">
+        <Tabs defaultValue="all">
+          <div className="flex w-full flex-wrap">
+            <div className="w-full md:w-[230px]">
+              <p className="text-4xl font-bold">Berita</p>
+            </div>
+            <div className="flex ml-auto gap-4 md:w-[400px] w-full mt-4 md:my-auto">
+              <TabsList className="grid w-full grid-cols-4 dark:bg-[#191919]">
+                <TabsTrigger
+                  value="all"
+                  className="dark:data-[state=active]:bg-[#0f0f0f]">
+                  Semua
+                </TabsTrigger>
+                <TabsTrigger
+                  value="nasional"
+                  className="dark:data-[state=active]:bg-[#0f0f0f]">
+                  Nasional
+                </TabsTrigger>
+                <TabsTrigger
+                  value="inter"
+                  className="dark:data-[state=active]:bg-[#0f0f0f]">
+                  Inter
+                </TabsTrigger>
+                <TabsTrigger
+                  value="olahraga"
+                  className="dark:data-[state=active]:bg-[#0f0f0f]">
+                  Olahraga
+                </TabsTrigger>
+              </TabsList>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <TabsContent className="flex flex-wrap w-full" value="all">
+              <NewsPage.All />
+            </TabsContent>
+            <TabsContent className="flex flex-wrap w-full" value="nasional">
+              <NewsPage.National />
+            </TabsContent>
+            <TabsContent className="flex flex-wrap w-full" value="inter">
+              <NewsPage.Inter />
+            </TabsContent>
+            <TabsContent className="flex flex-wrap w-full" value="olahraga">
+              <NewsPage.Sport />
+            </TabsContent>
+          </div>
+        </Tabs>
+      </main>
     </div>
   );
 }
