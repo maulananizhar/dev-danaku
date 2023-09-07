@@ -55,6 +55,13 @@ export default async function handler(
         message: "Masukkan konfirmasi kata sandi!",
       });
 
+    // password match
+    if (password !== confirmPassword)
+      return res.status(400).json({
+        status: false,
+        message: "Kata sandi dan Konfirmasi tidak sama!",
+      });
+
     // password length
     if (confirmPassword.length < 8)
       return res.status(400).json({
@@ -73,13 +80,6 @@ export default async function handler(
       return res
         .status(400)
         .json({ status: false, message: "Email tidak tersedia!" });
-
-    // password match
-    if (password !== confirmPassword)
-      return res.status(400).json({
-        status: false,
-        message: "Kata sandi dan Konfirmasi tidak sama!",
-      });
 
     // email validation
     if (!validator.isEmail(email))
