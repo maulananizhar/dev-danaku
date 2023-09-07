@@ -127,11 +127,6 @@ export default function Dashboard() {
               <Link href="/dashboard/news" className="">
                 Berita
               </Link>
-              <Link
-                href="/dashboard/settings"
-                className="opacity-80 hover:opacity-100 duration-75 ease-out">
-                Pengaturan
-              </Link>
             </div>
           </div>
           <div className="flex ml-auto">
@@ -157,19 +152,19 @@ export default function Dashboard() {
                     <DropdownMenuItem className="cursor-pointer">
                       <Link
                         href="/dashboard"
-                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
+                        className="block w-full opacity-80 hover:opacity-100 duration-75 ease-out">
                         Dashboard
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
                       <Link
                         href="/dashboard/membership"
-                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
+                        className="block w-full opacity-80 hover:opacity-100 duration-75 ease-out">
                         Keanggotaan
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
-                      <Link href="/dashboard/news" className="">
+                      <Link href="/dashboard/news" className="block w-full">
                         Berita
                       </Link>
                     </DropdownMenuItem>
@@ -177,11 +172,15 @@ export default function Dashboard() {
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem className="cursor-pointer">
-                    Profil
+                  <DropdownMenuItem>
+                    <Link href="/profile" className="block w-full">
+                      Profil
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    Pengaturan
+                  <DropdownMenuItem>
+                    <Link href="/settings" className="block w-full">
+                      Pengaturan
+                    </Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

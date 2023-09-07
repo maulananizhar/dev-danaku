@@ -66,6 +66,9 @@ export default async function handler(
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
+        balance: data.balance,
+        bio: data.bio,
+        address: data.address,
       },
       `${process.env.ACCESS_TOKEN_SECRET}`,
       { expiresIn: "30s" }
@@ -77,6 +80,9 @@ export default async function handler(
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
+        balance: data.balance,
+        bio: data.bio,
+        address: data.address,
       },
       `${process.env.REFRESH_TOKEN_SECRET}`,
       { expiresIn: "1d" }

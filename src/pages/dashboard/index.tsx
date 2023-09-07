@@ -78,6 +78,9 @@ export default function Dashboard() {
       auth.setFirstName(decoded.firstName);
       auth.setLastName(decoded.lastName);
       auth.setEmail(decoded.email);
+      auth.setBalance(decoded.balance);
+      auth.setBio(decoded.bio);
+      auth.setAddress(decoded.address);
       auth.setExpire(decoded.exp);
       setIsLoading(false);
     } catch (error) {
@@ -113,6 +116,9 @@ export default function Dashboard() {
         auth.setFirstName(decoded.firstName);
         auth.setLastName(decoded.lastName);
         auth.setEmail(decoded.email);
+        auth.setBalance(decoded.balance);
+        auth.setBio(decoded.bio);
+        auth.setAddress(decoded.address);
         auth.setExpire(decoded.exp);
       }
       return config;
@@ -198,10 +204,6 @@ export default function Dashboard() {
     fetcher();
   }, []);
 
-  useEffect(() => {
-    console.log(news);
-  }, [news]);
-
   if (isLoading) {
     return (
       <div className="bg-white dark:bg-[#121212]">
@@ -241,11 +243,6 @@ export default function Dashboard() {
                 className="opacity-80 hover:opacity-100 duration-75 ease-out">
                 Berita
               </Link>
-              <Link
-                href="/dashboard/settings"
-                className="opacity-80 hover:opacity-100 duration-75 ease-out">
-                Pengaturan
-              </Link>
             </div>
           </div>
           <div className="flex ml-auto">
@@ -268,22 +265,22 @@ export default function Dashboard() {
                 <div className="block md:hidden">
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem className="cursor-pointer">
-                      <Link href="/dashboard" className="">
+                    <DropdownMenuItem>
+                      <Link href="/dashboard" className="block w-full">
                         Dashboard
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem>
                       <Link
                         href="/dashboard/membership"
-                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
+                        className="block w-full opacity-80 hover:opacity-100 duration-75 ease-out">
                         Keanggotaan
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem>
                       <Link
                         href="/dashboard/news"
-                        className="opacity-80 hover:opacity-100 duration-75 ease-out">
+                        className="block w-full opacity-80 hover:opacity-100 duration-75 ease-out">
                         Berita
                       </Link>
                     </DropdownMenuItem>
@@ -291,11 +288,15 @@ export default function Dashboard() {
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem className="cursor-pointer">
-                    Profil
+                  <DropdownMenuItem>
+                    <Link href="/profile" className="block w-full">
+                      Profil
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    Pengaturan
+                  <DropdownMenuItem>
+                    <Link href="/settings" className="block w-full">
+                      Pengaturan
+                    </Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
