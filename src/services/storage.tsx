@@ -5,6 +5,13 @@ export const AuthContext = createContext({
   firstName: "",
   lastName: "",
   email: "",
+  balance: 0,
+  bio: "",
+  address: {
+    villageName: "",
+    subdistrict: "",
+    district: "",
+  },
   token: "",
   expire: 0,
 
@@ -19,6 +26,15 @@ export const AuthContext = createContext({
   },
   setEmail(email: string) {
     this.email = email;
+  },
+  setBalance(balance: number) {
+    this.balance = balance;
+  },
+  setBio(bio: string) {
+    this.bio = bio;
+  },
+  setAddress(address: any) {
+    this.address = address;
   },
   setToken(token: string) {
     this.token = token;
