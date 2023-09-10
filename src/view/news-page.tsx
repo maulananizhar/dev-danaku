@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +15,7 @@ function National() {
       );
       setNews(response.data.data);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   }
 

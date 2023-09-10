@@ -23,7 +23,6 @@ export default function Dashboard() {
   const axiosToken = axios.create();
   const router = useRouter();
   const auth = useContext(AuthContext);
-  const member = useContext(MembershipContext);
   const [isLoading, setIsLoading] = useState(true);
 
   async function refreshToken() {

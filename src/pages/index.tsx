@@ -17,17 +17,11 @@ import {
   EnvelopeClosedIcon,
   GitHubLogoIcon,
   InstagramLogoIcon,
-  PaperPlaneIcon,
   TwitterLogoIcon,
 } from "@radix-ui/react-icons";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import axios from "axios";
 
 export default function Home() {
@@ -47,7 +41,7 @@ export default function Home() {
       setName("");
       setMessage("");
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   }
 
@@ -56,17 +50,13 @@ export default function Home() {
       const response = await axios.post("/api/message");
       setData(response.data.data);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   }
 
   useEffect(() => {
     messageFetcher();
   }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   useEffect(() => {
     if (isOpen) {
