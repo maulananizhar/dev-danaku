@@ -375,8 +375,8 @@ export default function Home() {
                 Tentang kami
               </p>
               <p className="text-center opacity-80">
-                Kemudahan yang anda dapatkan adalah sebuah sebuah tanda
-                keberhasilan kami.
+                Kemudahan yang anda dapatkan adalah sebuah tanda keberhasilan
+                kami.
               </p>
             </div>
             <div className="flex flex-wrap justify-center gap-8">
@@ -462,6 +462,7 @@ export default function Home() {
                                     value={name}
                                     onChange={e => setName(e.target.value)}
                                     className="w-4/5 dark:border-white/20 h-8"
+                                    required
                                   />
                                 </div>
                                 <div className="flex mt-2">
@@ -476,6 +477,7 @@ export default function Home() {
                                     value={message}
                                     onChange={e => setMessage(e.target.value)}
                                     className="w-4/5 dark:border-white/20 h-8"
+                                    required
                                   />
                                 </div>
                                 <Button
