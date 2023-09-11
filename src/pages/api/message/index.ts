@@ -16,7 +16,7 @@ export default async function handler(
 
     // add member
     const data = await prisma.message.findMany({
-      take: 15,
+      take: 10,
       orderBy: { createdAt: "desc" },
     });
 
