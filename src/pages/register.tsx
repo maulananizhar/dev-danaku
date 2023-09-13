@@ -14,6 +14,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function Register() {
   const router = useRouter();
@@ -70,6 +72,7 @@ export default function Register() {
   }
 
   useEffect(() => {
+    AOS.init();
     refreshToken();
   }, []);
 
@@ -90,12 +93,12 @@ export default function Register() {
       </Head>
       <div className="flex w-screen h-[95vh] justify-center items-center">
         <div className="sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4 w-11/12">
-          <p className="text-center mb-6 text-4xl font-bold">
+          <p className="text-center mb-6 text-4xl font-bold" data-aos="fade-up">
             <Link href="/">
               Dana<span className="text-yellow-400">Ku</span>
             </Link>
           </p>
-          <Card className="dark:bg-[#191919]">
+          <Card className="dark:bg-[#191919]" data-aos="zoom-in">
             <CardContent className="py-6">
               <Alert
                 variant="destructive"
@@ -168,7 +171,7 @@ export default function Register() {
             </CardContent>
           </Card>
           <Separator className="my-4" />
-          <Card className="dark:bg-[#191919]">
+          <Card className="dark:bg-[#191919]" data-aos="zoom-in">
             <CardContent className="py-6">
               <p className="text-sm text-center">
                 Sudah memiliki akun?{" "}

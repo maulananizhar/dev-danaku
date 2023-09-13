@@ -23,6 +23,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import axios from "axios";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function Home() {
   const [isOpen, setOpen] = useState(false);
@@ -55,6 +57,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    AOS.init();
     messageFetcher();
   }, []);
 
@@ -117,7 +120,9 @@ export default function Home() {
         <section
           id="beranda"
           className="flex flex-wrap md:my-28 my-16 scroll-my-48">
-          <div className="lg:w-1/2 w-full flex flex-col justify-center">
+          <div
+            className="lg:w-1/2 w-full flex flex-col justify-center"
+            data-aos="zoom-in">
             <p className="text-5xl font-semibold leading-[1.15] lg:text-left text-center">
               Kelola Dana Koperasi Anda Degan Mudah hanya di Dana
               <span className="text-yellow-400">Ku</span>
@@ -149,6 +154,7 @@ export default function Home() {
                     height={400}
                     className="object-contain"
                     priority
+                    data-aos="zoom-in"
                   />
                 </TooltipTrigger>
                 <TooltipContent>
@@ -171,7 +177,7 @@ export default function Home() {
           id="produk"
           className="flex flex-col md:my-28 my-16 scroll-my-40">
           <div className="flex flex-col mb-16">
-            <div className="flex flex-col mb-8">
+            <div className="flex flex-col mb-8" data-aos="zoom-in-up">
               <p className="text-3xl font-semibold text-center mb-2">
                 Mengapa Harus Memilih Kami?
               </p>
@@ -187,7 +193,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col">
-            <div className="flex flex-col mb-8">
+            <div className="flex flex-col mb-8" data-aos="zoom-in-up">
               <p className="text-3xl font-semibold text-center mb-2">
                 Fitur Unggulan Kami
               </p>
@@ -197,9 +203,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex flex-col lg:mx-36">
+          <div className="flex flex-col lg:mx-36 overflow-x-hidden">
             <div className="flex flex-wrap md:my-4 my-8">
-              <div className="lg:w-1/2 w-full flex flex-col justify-center">
+              <div
+                className="lg:w-1/2 w-full flex flex-col justify-center"
+                data-aos="fade-right">
                 <p className="text-2xl font-semibold leading-[1.15] lg:text-left text-center">
                   Dashboard modern
                 </p>
@@ -221,6 +229,7 @@ export default function Home() {
                         height={300}
                         className="object-contain"
                         priority
+                        data-aos="zoom-in"
                       />
                     </TooltipTrigger>
                     <TooltipContent>
@@ -251,6 +260,7 @@ export default function Home() {
                         height={300}
                         className="object-contain"
                         priority
+                        data-aos="zoom-in"
                       />
                     </TooltipTrigger>
                     <TooltipContent>
@@ -267,7 +277,9 @@ export default function Home() {
                   </Tooltip>
                 </TooltipProvider>
               </div>
-              <div className="lg:w-1/2 w-full flex flex-col justify-center">
+              <div
+                className="lg:w-1/2 w-full flex flex-col justify-center"
+                data-aos="fade-left">
                 <p className="text-2xl font-semibold leading-[1.15] lg:text-left text-center">
                   Akses cepat
                 </p>
@@ -282,7 +294,9 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap md:my-4 my-8">
-              <div className="lg:w-1/2 w-full flex flex-col justify-center">
+              <div
+                className="lg:w-1/2 w-full flex flex-col justify-center"
+                data-aos="fade-right">
                 <p className="text-2xl font-semibold leading-[1.15] lg:text-left text-center">
                   Sinkronisasi cloud
                 </p>
@@ -304,6 +318,7 @@ export default function Home() {
                         height={300}
                         className="object-contain"
                         priority
+                        data-aos="zoom-in"
                       />
                     </TooltipTrigger>
                     <TooltipContent>
@@ -334,6 +349,7 @@ export default function Home() {
                         height={300}
                         className="object-contain"
                         priority
+                        data-aos="zoom-in"
                       />
                     </TooltipTrigger>
                     <TooltipContent>
@@ -350,7 +366,9 @@ export default function Home() {
                   </Tooltip>
                 </TooltipProvider>
               </div>
-              <div className="lg:w-1/2 w-full flex flex-col justify-center">
+              <div
+                className="lg:w-1/2 w-full flex flex-col justify-center"
+                data-aos="fade-left">
                 <p className="text-2xl font-semibold leading-[1.15] lg:text-left text-center">
                   Terenkripsi
                 </p>
@@ -370,7 +388,7 @@ export default function Home() {
           id="tentang"
           className="flex flex-wrap md:my-28 my-16 justify-center scroll-my-32">
           <div className="flex flex-col mb-16">
-            <div className="flex flex-col mb-8">
+            <div className="flex flex-col mb-8" data-aos="zoom-in-up">
               <p className="text-3xl font-semibold text-center mb-2">
                 Tentang kami
               </p>
@@ -381,7 +399,9 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap justify-center gap-8">
               <div className="lg:w-1/3 md:w-3/4 w-full my-auto">
-                <Card className="dark:bg-[#191919] min-h-[272px] flex items-center">
+                <Card
+                  className="dark:bg-[#191919] min-h-[272px] flex items-center"
+                  data-aos="fade-right">
                   <CardContent className="py-6">
                     <Image
                       src="/images/about.png"
@@ -394,8 +414,10 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </div>
-              <div className="lg:w-1/3 md:w-3/4 w-full">
-                <Card className="dark:bg-[#191919] min-h-[272px] flex items-center">
+              <div className="lg:w-1/3 md:w-3/4 w-full overflow-x-hidden">
+                <Card
+                  className="dark:bg-[#191919] min-h-[272px] flex items-center"
+                  data-aos="fade-left">
                   <CardContent className="py-6 h-full w-full">
                     <p className="text-2xl font-bold">
                       Dana<span className="text-yellow-400">Ku</span>
@@ -498,7 +520,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col mb-16">
-            <div className="flex flex-col mb-8">
+            <div className="flex flex-col mb-8" data-aos="zoom-in-up">
               <p className="text-3xl font-semibold text-center mb-2">
                 Kata mereka untuk kami
               </p>
@@ -509,7 +531,10 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap items-center gap-4 mx-auto justify-center w-4/5">
               {data.map((data: any, index) => (
-                <Card className="dark:bg-[#121212]" key={index}>
+                <Card
+                  className="dark:bg-[#121212]"
+                  key={index}
+                  data-aos="zoom-in">
                   <CardContent className="px-6 py-4">
                     <p className="font-bold text-center">{data.message}</p>
                     <p className="opacity-80 text-center">{data.name}</p>

@@ -19,7 +19,7 @@ const KemudahanAkses = () => {
 
   return (
     <div className="md:w-1/3 w-full md:my-0 mb-8">
-      <Card className="mx-4 dark:bg-[#191919]">
+      <Card className="mx-4 dark:bg-[#191919]" data-aos="flip-left">
         <CardHeader>
           <RocketIcon className="bg-red-500 w-10 h-10 py-2 rounded-md" />
         </CardHeader>
@@ -58,7 +58,7 @@ const BerkembangBersama = () => {
 
   return (
     <div className="md:w-1/3 w-full md:my-0 mb-8">
-      <Card className="mx-4 dark:bg-[#191919]">
+      <Card className="mx-4 dark:bg-[#191919]" data-aos="flip-up">
         <CardHeader>
           <MixIcon className="bg-blue-500 w-10 h-10 py-2 rounded-md" />
         </CardHeader>
@@ -97,7 +97,7 @@ const PeminjamanInvestasi = () => {
 
   return (
     <div className="md:w-1/3 w-full md:my-0 mb-8">
-      <Card className="mx-4 dark:bg-[#191919]">
+      <Card className="mx-4 dark:bg-[#191919]" data-aos="flip-right">
         <CardHeader>
           <FileTextIcon className="bg-yellow-400 w-10 h-10 py-2 rounded-md" />
         </CardHeader>

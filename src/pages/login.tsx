@@ -12,6 +12,8 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AuthContext } from "@/services/storage";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function Login() {
   const router = useRouter();
@@ -58,6 +60,7 @@ export default function Login() {
   }
 
   useEffect(() => {
+    AOS.init();
     refreshToken();
   }, []);
 
@@ -76,14 +79,14 @@ export default function Login() {
         <title>Login</title>
         <link rel="icon" href="/danaku.png" />
       </Head>
-      <div className="flex w-screen h-[80vh]">
-        <div className="md:w-1/4 w-11/12 mx-auto mt-[20vh]">
-          <p className="text-center mb-6 text-4xl font-bold">
+      <div className="flex w-screen h-[80vh] justify-center items-center">
+        <div className="sm:w-1/2 md:w-2/5 lg:w-1/3 xl:w-1/4 w-11/12">
+          <p className="text-center mb-6 text-4xl font-bold" data-aos="fade-up">
             <Link href="/">
               Dana<span className="text-yellow-400">Ku</span>
             </Link>
           </p>
-          <Card className="dark:bg-[#191919]">
+          <Card className="dark:bg-[#191919]" data-aos="zoom-in">
             <CardContent className="py-6">
               <Alert
                 variant="destructive"
@@ -122,7 +125,7 @@ export default function Login() {
             </CardContent>
           </Card>
           <Separator className="my-4" />
-          <Card className="dark:bg-[#191919]">
+          <Card className="dark:bg-[#191919]" data-aos="zoom-in">
             <CardContent className="py-6">
               <p className="text-sm text-center">
                 Belum memiliki akun?{" "}
