@@ -7,7 +7,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import axios from "axios";
 import { AuthContext, MembershipContext } from "@/services/storage";

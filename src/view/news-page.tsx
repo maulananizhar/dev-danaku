@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Card } from "@/components/ui/card";
 import axios from "axios";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -33,12 +33,11 @@ function National() {
               href={data.link}
               target="_blank">
               <div className="flex-shrink-0">
-                <Image
+                <img
                   src={data.image.large}
                   alt="main"
                   width={300}
                   height={200}
-                  priority
                   className="rounded-lg group-hover:brightness-75 duration-200"
                 />
               </div>
@@ -82,12 +81,11 @@ function All() {
               href={data.link}
               target="_blank">
               <div className="flex-shrink-0">
-                <Image
+                <img
                   src={data.image.large}
                   alt="main"
                   width={300}
                   height={200}
-                  priority
                   className="rounded-lg group-hover:brightness-75 duration-200"
                 />
               </div>
@@ -131,12 +129,11 @@ function Inter() {
               href={data.link}
               target="_blank">
               <div className="flex-shrink-0">
-                <Image
+                <img
                   src={data.image.large}
                   alt="main"
                   width={300}
                   height={200}
-                  priority
                   className="rounded-lg group-hover:brightness-75 duration-200"
                 />
               </div>
@@ -180,12 +177,11 @@ function Sport() {
               href={data.link}
               target="_blank">
               <div className="flex-shrink-0">
-                <Image
+                <img
                   src={data.image.large}
                   alt="main"
                   width={300}
                   height={200}
-                  priority
                   className="rounded-lg group-hover:brightness-75 duration-200"
                 />
               </div>

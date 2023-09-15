@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -27,7 +28,6 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
 
 export default function Dashboard() {
   const axiosToken = axios.create();
@@ -497,12 +497,11 @@ export default function Dashboard() {
                 className="flex py-2 px-2 group"
                 href={news.link}
                 target="_blank">
-                <Image
+                <img
                   src={news.image.large}
                   alt="news"
                   height={100}
                   width={150}
-                  priority
                   className="rounded-md group-hover:brightness-75 duration-200"
                 />
                 <div className="flex flex-col py-2 px-4">

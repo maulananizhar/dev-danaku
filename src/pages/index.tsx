@@ -1,10 +1,10 @@
-import ThemeDropdown from "@/components/theme-dropdown";
+/* eslint-disable @next/next/no-img-element */
+// import ThemeDropdown from "@/components/theme-dropdown";
 import { Button } from "@/components/ui/button";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Spin as Hamburger } from "hamburger-react";
-import Image from "next/image";
 import {
   Tooltip,
   TooltipContent,
@@ -147,13 +147,12 @@ export default function Home() {
             <TooltipProvider>
               <Tooltip delayDuration={50}>
                 <TooltipTrigger>
-                  <Image
+                  <img
                     src="/main-image.png"
                     alt="main-image"
                     width={400}
                     height={400}
                     className="object-contain"
-                    priority
                     data-aos="zoom-in"
                   />
                 </TooltipTrigger>
@@ -222,13 +221,12 @@ export default function Home() {
                 <TooltipProvider>
                   <Tooltip delayDuration={50}>
                     <TooltipTrigger>
-                      <Image
+                      <img
                         src="/images/dashboard.png"
                         alt="dashboard"
                         width={300}
                         height={300}
                         className="object-contain"
-                        priority
                         data-aos="zoom-in"
                       />
                     </TooltipTrigger>
@@ -253,13 +251,12 @@ export default function Home() {
                 <TooltipProvider>
                   <Tooltip delayDuration={50}>
                     <TooltipTrigger>
-                      <Image
+                      <img
                         src="/images/fast.png"
                         alt="fast"
                         width={300}
                         height={300}
                         className="object-contain"
-                        priority
                         data-aos="zoom-in"
                       />
                     </TooltipTrigger>
@@ -311,13 +308,12 @@ export default function Home() {
                 <TooltipProvider>
                   <Tooltip delayDuration={50}>
                     <TooltipTrigger>
-                      <Image
+                      <img
                         src="/images/cloud.png"
                         alt="cloud"
                         width={300}
                         height={300}
                         className="object-contain"
-                        priority
                         data-aos="zoom-in"
                       />
                     </TooltipTrigger>
@@ -342,13 +338,12 @@ export default function Home() {
                 <TooltipProvider>
                   <Tooltip delayDuration={50}>
                     <TooltipTrigger>
-                      <Image
+                      <img
                         src="/images/encrypt.png"
                         alt="encrypt"
                         width={300}
                         height={300}
                         className="object-contain"
-                        priority
                         data-aos="zoom-in"
                       />
                     </TooltipTrigger>
@@ -403,13 +398,12 @@ export default function Home() {
                   className="dark:bg-[#191919] min-h-[272px] flex items-center"
                   data-aos="fade-right">
                   <CardContent className="py-6">
-                    <Image
+                    <img
                       src="/images/about.png"
                       alt="about"
                       width={1366}
                       height={768}
                       className="object-contain rounded"
-                      priority
                     />
                   </CardContent>
                 </Card>
