@@ -565,9 +565,7 @@ export default function Home() {
                 <p>All Rights Reserved</p>
               </div>
             </div>
-            <div>
-              <ThemeDropdown />
-            </div>
+            <div>{/* <ThemeDropdown /> */}</div>
           </div>
         </div>
       </footer>
