@@ -293,11 +293,11 @@ export default function Dashboard() {
                       Profil
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  {/* <DropdownMenuItem>
                     <Link href="/settings" className="block w-full">
                       Pengaturan
                     </Link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
