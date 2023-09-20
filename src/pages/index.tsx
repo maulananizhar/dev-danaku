@@ -124,7 +124,7 @@ export default function Home() {
             className="lg:w-1/2 w-full flex flex-col justify-center"
             data-aos="zoom-in">
             <p className="text-5xl font-semibold leading-[1.15] lg:text-left text-center">
-              Kelola Dana Koperasi Anda Degan Mudah hanya di Dana
+              Kelola Dana Koperasi Anda Dengan Mudah hanya di Dana
               <span className="text-yellow-400">Ku</span>
             </p>
             <p className="my-2 lg:text-left text-center opacity-80">
